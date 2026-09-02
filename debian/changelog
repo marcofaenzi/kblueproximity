@@ -1,3 +1,11 @@
+blueproximity (2.0.0-1) resolute; urgency=medium
+
+  * Qt6 / KDE rewrite with PySide6; remove GTK3, Glade and Ayatana.
+  * Modular package layout; QSystemTrayIcon StatusNotifierItem.
+  * Keep ConfigObj settings under ~/.blueproximity for compatibility.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Wed, 02 Sep 2026 17:45:00 +0200
+
 blueproximity (1.4.7-1) resolute; urgency=medium
 
   * Tray menu: show Resume when paused, Pause otherwise.

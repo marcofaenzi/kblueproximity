@@ -7,7 +7,9 @@ export DH_VERBOSE = 1
 
 override_dh_auto_install:
 	install -d debian/blueproximity/usr/share/blueproximity
-	install -m 644 proximity.py proximity3.glade *.svg debian/blueproximity/usr/share/blueproximity/
+	cp -a blueproximity debian/blueproximity/usr/share/blueproximity/
+	find debian/blueproximity/usr/share/blueproximity -type d -name __pycache__ -exec rm -rf {} +
+	install -m 644 proximity.py *.svg debian/blueproximity/usr/share/blueproximity/
 	cp -a LANG debian/blueproximity/usr/share/blueproximity/
 	install -d debian/blueproximity/usr/bin
 	install -m 755 addons/blueproximity debian/blueproximity/usr/bin/blueproximity
