@@ -1,3 +1,9 @@
+blueproximity (1.4.7-1) resolute; urgency=medium
+
+  * Tray menu: show Resume when paused, Pause otherwise.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Wed, 02 Sep 2026 17:33:00 +0200
+
 blueproximity (1.4.0-1) resolute; urgency=medium
 
   * Plasma 6 / Wayland compatibility: Ayatana tray icon, KDE lock commands.

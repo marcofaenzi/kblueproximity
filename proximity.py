@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-SW_VERSION = '1.4.6'
+SW_VERSION = '1.4.7'
 
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
@@ -452,9 +452,9 @@ class ProximityGUI(object):
         menuItem = gtk.ImageMenuItem.new_from_stock(stock_id=gtk.STOCK_PREFERENCES)
         menuItem.connect('activate', self.showWindow)
         popupmenu.append(menuItem)
-        menuItem = gtk.ImageMenuItem.new_from_stock(stock_id=gtk.STOCK_MEDIA_PAUSE)
-        menuItem.connect('activate', self.pausePressed)
-        popupmenu.append(menuItem)
+        self.pause_menu_item = gtk.ImageMenuItem.new_from_stock(stock_id=gtk.STOCK_MEDIA_PAUSE)
+        self.pause_menu_item.connect('activate', self.pausePressed)
+        popupmenu.append(self.pause_menu_item)
         menuItem = gtk.ImageMenuItem.new_from_stock(stock_id=gtk.STOCK_ABOUT)
         menuItem.connect('activate', self.aboutPressed)
         popupmenu.append(menuItem)
@@ -464,7 +464,21 @@ class ProximityGUI(object):
         menuItem.connect('activate', self.quit)
         popupmenu.append(menuItem)
         popupmenu.show_all()
+        self._update_pause_menu_item()
         return popupmenu
+
+    def _update_pause_menu_item(self):
+        if not hasattr(self, 'pause_menu_item'):
+            return
+        if self.pauseMode:
+            stock = gtk.STOCK_MEDIA_PLAY
+            label = _('Resume')
+        else:
+            stock = gtk.STOCK_MEDIA_PAUSE
+            label = _('Pause')
+        self.pause_menu_item.set_image(
+            gtk.Image.new_from_stock(stock, gtk.IconSize.MENU))
+        self.pause_menu_item.set_label(label)
 
     def _set_tray_icon(self, icon_file, tooltip):
         icon_path = dist_path + icon_file
@@ -819,6 +833,7 @@ class ProximityGUI(object):
                 config[2].dev_mac = ''
                 config[2].Simulate = True
                 config[2].kill_connection()
+        self._update_pause_menu_item()
 
     # Helper function to set a ComboBox's value to value if that exists in the Combo's list
     # The value is not changed if the new value is not member of the list.
