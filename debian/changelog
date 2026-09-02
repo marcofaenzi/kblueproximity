@@ -1,0 +1,7 @@
+blueproximity (1.4.0-1) resolute; urgency=medium
+
+  * Plasma 6 / Wayland compatibility: Ayatana tray icon, KDE lock commands.
+  * Auto-detect install path; replace deprecated gnome-screensaver defaults.
+  * Use subprocess for hcitool RSSI with timeout.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Wed, 02 Sep 2026 15:40:00 +0200

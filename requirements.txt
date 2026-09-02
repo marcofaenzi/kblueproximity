@@ -1,0 +1,3 @@
+configobj
+pgi
+pybluez

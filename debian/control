@@ -1,0 +1,29 @@
+Source: blueproximity
+Section: utils
+Priority: optional
+Maintainer: Marco Faenzi <marcofaenzi@users.noreply.github.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/marcofaenzi/blueproximity
+Vcs-Git: https://github.com/marcofaenzi/blueproximity.git
+Vcs-Browser: https://github.com/marcofaenzi/blueproximity
+
+Package: blueproximity
+Architecture: all
+Depends: ${misc:Depends},
+          python3,
+          python3-gi,
+          gir1.2-gtk-3.0,
+          gir1.2-ayatanaappindicator3-0.1 | gir1.2-appindicator3-0.1,
+          python3-configobj,
+          python3-bluez,
+          python3-dbus,
+          bluez,
+          qdbus-qt6,
+          python3:any
+Recommends: bluez-tools
+Description: Bluetooth proximity detector for automatic screen lock/unlock
+ BlueProximity locks and unlocks your desktop based on the proximity of a
+ Bluetooth device (typically a mobile phone). It is compatible with Plasma 6
+ and Wayland via loginctl and the freedesktop ScreenSaver D-Bus interface.

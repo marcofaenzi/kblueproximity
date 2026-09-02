@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	install -d debian/blueproximity/usr/share/blueproximity
+	install -m 644 proximity.py proximity3.glade *.svg debian/blueproximity/usr/share/blueproximity/
+	cp -a LANG debian/blueproximity/usr/share/blueproximity/
+	install -d debian/blueproximity/usr/bin
+	install -m 755 addons/blueproximity debian/blueproximity/usr/bin/blueproximity
+	install -d debian/blueproximity/usr/share/applications
+	install -m 644 addons/blueproximity.desktop debian/blueproximity/usr/share/applications/
+	install -d debian/blueproximity/usr/share/pixmaps
+	install -m 644 addons/blueproximity.xpm debian/blueproximity/usr/share/pixmaps/
+	install -d debian/blueproximity/usr/share/doc/blueproximity
+	install -m 644 README.md COPYING ChangeLog debian/blueproximity/usr/share/doc/blueproximity/
+	install -d debian/blueproximity/usr/share/man/man1
+	gzip -9 -c doc/blueproximity.1 > debian/blueproximity/usr/share/man/man1/blueproximity.1.gz
