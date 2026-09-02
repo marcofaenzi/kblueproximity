@@ -159,16 +159,20 @@ class PreferencesWindow(QMainWindow):
         w = QWidget()
         layout = QVBoxLayout(w)
 
-        self.slider_lock_dist = self._make_slider(0, 127)
-        self.slider_lock_dur = self._make_slider(0, 120)
-        self.slider_unlock_dist = self._make_slider(0, 127)
-        self.slider_unlock_dur = self._make_slider(0, 120)
+        self.slider_lock_dist, self.spin_lock_dist = self._make_slider_spin(0, 127)
+        self.slider_lock_dur, self.spin_lock_dur = self._make_slider_spin(0, 120)
+        self.slider_unlock_dist, self.spin_unlock_dist = self._make_slider_spin(0, 127)
+        self.slider_unlock_dur, self.spin_unlock_dur = self._make_slider_spin(0, 120)
 
         form = QFormLayout()
-        form.addRow(_('Lock distance:'), self.slider_lock_dist)
-        form.addRow(_('Lock duration (s):'), self.slider_lock_dur)
-        form.addRow(_('Unlock distance:'), self.slider_unlock_dist)
-        form.addRow(_('Unlock duration (s):'), self.slider_unlock_dur)
+        form.addRow(_('Lock distance:'), self._slider_spin_row(
+            self.slider_lock_dist, self.spin_lock_dist))
+        form.addRow(_('Lock duration (s):'), self._slider_spin_row(
+            self.slider_lock_dur, self.spin_lock_dur))
+        form.addRow(_('Unlock distance:'), self._slider_spin_row(
+            self.slider_unlock_dist, self.spin_unlock_dist))
+        form.addRow(_('Unlock duration (s):'), self._slider_spin_row(
+            self.slider_unlock_dur, self.spin_unlock_dur))
         layout.addLayout(form)
 
         self.lab_state = QLabel(_('min: 0 max: 0 state: -'))
@@ -238,6 +242,29 @@ class PreferencesWindow(QMainWindow):
         slider.setRange(minimum, maximum)
         slider.valueChanged.connect(self._emit_settings)
         return slider
+
+    def _make_slider_spin(self, minimum: int, maximum: int):
+        """Horizontal slider synced with an editable numeric spin box."""
+        from PySide6.QtCore import Qt
+        slider = QSlider(Qt.Orientation.Horizontal)
+        slider.setRange(minimum, maximum)
+        spin = QSpinBox()
+        spin.setRange(minimum, maximum)
+        spin.setKeyboardTracking(True)
+        slider.valueChanged.connect(spin.setValue)
+        spin.valueChanged.connect(slider.setValue)
+        slider.valueChanged.connect(self._emit_settings)
+        return slider, spin
+
+    @staticmethod
+    def _slider_spin_row(slider: QSlider, spin: QSpinBox) -> QWidget:
+        row = QWidget()
+        layout = QHBoxLayout(row)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(slider, stretch=1)
+        spin.setFixedWidth(72)
+        layout.addWidget(spin)
+        return row
 
     def set_gone_live(self, value: bool):
         self._gone_live = value

@@ -1,3 +1,9 @@
+blueproximity (2.0.1-1) resolute; urgency=medium
+
+  * Proximity Details: editable numeric spin boxes next to the four sliders.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Wed, 02 Sep 2026 18:22:00 +0200
+
 blueproximity (2.0.0-1) resolute; urgency=medium
 
   * Qt6 / KDE rewrite with PySide6; remove GTK3, Glade and Ayatana.
