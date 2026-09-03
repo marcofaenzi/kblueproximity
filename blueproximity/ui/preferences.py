@@ -37,6 +37,8 @@ class NameDialog(QDialog):
     def __init__(self, title: str, prompt: str, parent=None):
         super().__init__(parent)
         self.setWindowTitle(title)
+        if parent and parent.windowIcon():
+            self.setWindowIcon(parent.windowIcon())
         layout = QVBoxLayout(self)
         layout.addWidget(QLabel(prompt))
         self.entry = QLineEdit()
@@ -66,7 +68,7 @@ class PreferencesWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__()
-        self.setWindowTitle(_('BlueProximity Preferences'))
+        self.setWindowTitle('BlueProximity preferences')
         self.resize(720, 560)
         self._gone_live = False
         self._scanning_channels = False

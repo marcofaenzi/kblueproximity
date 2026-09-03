@@ -102,6 +102,9 @@ class BlueProximityApp(QObject):
         self.prefs.about_requested.connect(self.show_about)
         self.prefs.closed.connect(self.on_prefs_closed)
 
+        self._app_icon = QIcon(icon_path(ICON_BASE))
+        self.prefs.setWindowIcon(self._app_icon)
+
         self._build_tray()
         self.prefs.fill_config_combo(self.configs, self.configname)
         self.prefs.read_settings(self.config)
@@ -153,7 +156,12 @@ class BlueProximityApp(QObject):
 
     def _tray_activated(self, reason):
         if reason == QSystemTrayIcon.ActivationReason.Trigger:
-            self.show_preferences()
+            if self.prefs.isVisible():
+                self.prefs.hide()
+            else:
+                self.show_preferences()
+        elif reason == QSystemTrayIcon.ActivationReason.MiddleClick:
+            self.toggle_pause()
 
     def _update_pause_action(self):
         if self.pause_mode:
@@ -398,11 +406,13 @@ class BlueProximityApp(QObject):
 
         if self.pause_mode:
             self.tray.setIcon(QIcon(icon_path(ICON_PAUSE)))
-            self.tray.setToolTip(_('Pause Mode - not connected'))
+            self.tray.setToolTip('BlueProximity\n-- PAUSED --')
             return
 
+        distance = -new_val
+        tooltip = 'BlueProximity\nDistance: %d' % distance
+
         connection_state = 0
-        con_info = ''
         con_icons = [ICON_BASE, ICON_ATT, ICON_AWAY, ICON_ERROR]
         for config in self.configs:
             if config[2].ErrorMsg == 'No connection found, trying to establish one...':
@@ -415,20 +425,12 @@ class BlueProximityApp(QObject):
                     if new_val < config[2].active_limit:
                         if connection_state < 1:
                             connection_state = 1
-            if con_info:
-                con_info += '\n\n'
-            con_info += (
-                config[0] + ': ' + _('Detected Distance: ') + str(-config[2].Dist)
-                + '; ' + _('Current State: ') + config[2].State
-                + '; ' + _('Status: ') + config[2].ErrorMsg
-            )
-        simu = _('\nSimulation Mode (locking disabled)') if self.proxi.Simulate else ''
         self.tray.setIcon(QIcon(icon_path(con_icons[connection_state])))
-        self.tray.setToolTip(con_info + '\n' + simu)
+        self.tray.setToolTip(tooltip)
 
     def show_about(self):
-        QMessageBox.about(
-            self.prefs if self.prefs.isVisible() else None,
+        about = QMessageBox(
+            QMessageBox.Icon.NoIcon,
             _('About BlueProximity'),
             _(
                 '<h3>BlueProximity {version}</h3>'
@@ -439,7 +441,11 @@ class BlueProximityApp(QObject):
                 '<p><a href="https://github.com/marcofaenzi/blueproximity">'
                 'https://github.com/marcofaenzi/blueproximity</a></p>'
             ).format(version=SW_VERSION),
+            parent=self.prefs if self.prefs.isVisible() else None,
         )
+        about.setWindowIcon(self._app_icon)
+        about.setIconPixmap(self._app_icon.pixmap(64, 64))
+        about.exec()
 
     def quit(self):
         for config in self.configs:
@@ -463,6 +469,8 @@ def run_app():
 
     app = QApplication(sys.argv)
     app.setApplicationName('BlueProximity')
+    app.setDesktopFileName('blueproximity')
+    app.setWindowIcon(QIcon(icon_path(ICON_BASE)))
     app.setQuitOnLastWindowClosed(False)
     controller = BlueProximityApp(configs, is_new)
     # Keep reference alive

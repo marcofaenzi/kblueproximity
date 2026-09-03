@@ -1,3 +1,35 @@
+blueproximity (2.0.6-1) resolute; urgency=medium
+
+  * Left-click tray toggles preferences; middle-click toggles pause.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Thu, 03 Sep 2026 18:17:00 +0200
+
+blueproximity (2.0.5-1) resolute; urgency=medium
+
+  * Window title: "BlueProximity preferences" (hardcoded English).
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Wed, 03 Sep 2026 18:04:00 +0200
+
+blueproximity (2.0.4-1) resolute; urgency=medium
+
+  * Set application-wide window icon (blueproximity_base.svg) via QApplication.
+  * Desktop file icon points to SVG for proper taskbar display on Plasma 6.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Wed, 03 Sep 2026 17:46:00 +0200
+
+blueproximity (2.0.3-1) resolute; urgency=medium
+
+  * Hide distance in tray tooltip while paused.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Wed, 03 Sep 2026 17:42:00 +0200
+
+blueproximity (2.0.2-1) resolute; urgency=medium
+
+  * Tray tooltip: "BlueProximity / Distance: X / -- PAUSED --".
+  * Window icon set to blueproximity_base.svg (Preferences, About, dialogs).
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Wed, 03 Sep 2026 17:34:00 +0200
+
 blueproximity (2.0.1-1) resolute; urgency=medium
 
   * Proximity Details: editable numeric spin boxes next to the four sliders.
