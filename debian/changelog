@@ -1,4 +1,4 @@
-kblueproximity (2.2.3-1) UNRELEASED; urgency=medium
+kblueproximity (2.2.3-1) unstable; urgency=medium
 
   * Initial Debian release.
   * AppStream metainfo, Policy-compliant desktop file, and quilt source format.

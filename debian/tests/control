@@ -1,3 +1,6 @@
+Tests: import
+Depends: @
+
 Tests: metadata
-Depends: appstream, desktop-file-utils
+Depends: @, appstream, desktop-file-utils
 Restrictions: superficial

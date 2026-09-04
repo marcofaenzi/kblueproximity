@@ -13,6 +13,10 @@ Files: debian/*
 Copyright: 2026 Marco Faenzi
 License: GPL-2
 
+Files: addons/it.faenzi.kblueproximity.metainfo.xml
+Copyright: 2026 Marco Faenzi
+License: FSFAP
+
 License: GPL-2
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -28,3 +32,9 @@ License: GPL-2
  .
  On Debian systems, the complete text of the GNU General Public License
  version 2 can be found in "/usr/share/common-licenses/GPL-2".
+
+License: FSFAP
+ Copying and distribution of this file, with or without modification,
+ are permitted in any medium without royalty provided the copyright
+ notice and this notice are preserved. This file is offered as-is,
+ without any warranty.

@@ -24,4 +24,4 @@ Then build with:
 uscan (debian/watch) expects an upstream GitHub tag such as v2.2.3.
 
 After the ITP bug is filed, add "(Closes: #nnnnnn)" to debian/changelog
-and change the distribution from UNRELEASED to unstable.
+before the mentors upload.

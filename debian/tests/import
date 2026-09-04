@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+export PYTHONPATH=/usr/share/kblueproximity
+python3 - <<'PY'
+from kblueproximity import APP_NAME, SW_VERSION
+
+assert APP_NAME == 'kblueproximity', APP_NAME
+assert SW_VERSION, SW_VERSION
+print(APP_NAME, SW_VERSION)
+PY
+test -x /usr/bin/kblueproximity
+test -f /usr/share/applications/kblueproximity.desktop
+test -f /usr/share/metainfo/it.faenzi.kblueproximity.metainfo.xml
