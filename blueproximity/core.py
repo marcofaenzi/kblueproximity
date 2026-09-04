@@ -1,6 +1,7 @@
 """Proximity detection engine (no GUI dependencies)."""
 from __future__ import annotations
 
+import math
 import shutil
 import subprocess
 import threading
@@ -180,16 +181,20 @@ class Proximity(threading.Thread):
         proxi_cmd_counter = 0
         while not self.Stop:
             try:
+                scan_period = max(1, int(self.config.get('scan_period', 1)))
                 if self.dev_mac != '':
                     self.ErrorMsg = _('running...')
                     dist = self.run_cycle(self.dev_mac, self.dev_channel)
                 else:
                     dist = -255
                     self.ErrorMsg = 'No bluetooth device configured...'
+                lock_cycles = max(1, int(math.ceil(float(self.gone_duration) / scan_period)))
+                unlock_cycles = max(
+                    1, int(math.ceil(float(self.active_duration) / scan_period)))
                 if state == _('gone'):
                     if dist >= self.active_limit:
                         duration_count += 1
-                        if duration_count >= self.active_duration:
+                        if duration_count >= unlock_cycles:
                             state = _('active')
                             duration_count = 0
                             if not self.Simulate:
@@ -199,7 +204,7 @@ class Proximity(threading.Thread):
                 else:
                     if dist <= self.gone_limit:
                         duration_count += 1
-                        if duration_count >= self.gone_duration:
+                        if duration_count >= lock_cycles:
                             state = _('gone')
                             proxi_cmd_counter = 0
                             duration_count = 0
@@ -216,14 +221,19 @@ class Proximity(threading.Thread):
                     )
                 self.State = state
                 self.Dist = dist
+                prox_cycles = max(
+                    1,
+                    int(math.ceil(
+                        float(self.config['proximity_interval']) / scan_period)),
+                )
                 if (
-                    proxi_cmd_counter >= int(self.config['proximity_interval'])
+                    proxi_cmd_counter >= prox_cycles
                     and not self.Simulate
                     and self.config['proximity_command'] != ''
                 ):
                     proxi_cmd_counter = 0
                     self._async(self.go_proximity)
-                time.sleep(1)
+                time.sleep(scan_period)
             except KeyboardInterrupt:
                 break
         self.kill_connection()

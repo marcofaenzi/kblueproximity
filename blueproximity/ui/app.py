@@ -2,10 +2,11 @@
 from __future__ import annotations
 
 import os
+import socket
 import sys
 import time
 
-from PySide6.QtCore import QObject, QTimer, Signal, Slot
+from PySide6.QtCore import QObject, QSocketNotifier, QTimer, Signal, Slot
 from PySide6.QtGui import QAction, QIcon
 from PySide6.QtWidgets import (
     QApplication,
@@ -14,6 +15,7 @@ from PySide6.QtWidgets import (
 )
 
 from blueproximity import SW_VERSION
+from blueproximity.behavior import load_behavior, save_behavior
 from blueproximity.config import load_configs
 from blueproximity.core import Proximity
 from blueproximity.i18n import _
@@ -88,10 +90,12 @@ class BlueProximityApp(QObject):
         self._scan_worker = None
         self._channel_thread = None
         self._channel_worker = None
+        self.behavior = load_behavior()
 
         self.prefs = PreferencesWindow(self)
         self.prefs.settings_changed.connect(self.write_settings)
         self.prefs.settings_changed_reconnect.connect(self.write_settings_reconnect)
+        self.prefs.behavior_changed.connect(self.write_behavior)
         self.prefs.scan_devices_requested.connect(self.scan_devices)
         self.prefs.scan_channels_requested.connect(self.scan_channels)
         self.prefs.config_selected.connect(self.select_config)
@@ -108,7 +112,9 @@ class BlueProximityApp(QObject):
         self._build_tray()
         self.prefs.fill_config_combo(self.configs, self.configname)
         self.prefs.read_settings(self.config)
+        self.prefs.read_behavior(self.behavior)
         self.prefs.set_gone_live(True)
+        self._apply_behavior()
 
         self.state_timer = QTimer(self)
         self.state_timer.timeout.connect(self.update_state)
@@ -151,8 +157,36 @@ class BlueProximityApp(QObject):
         menu.addAction(self.act_quit)
 
         self.tray.setContextMenu(menu)
-        self.tray.show()
         self._update_pause_action()
+
+    def _apply_behavior(self):
+        hide_tray = bool(self.behavior.get('hide_systray'))
+        if hide_tray:
+            self.tray.hide()
+        else:
+            self.tray.show()
+        if bool(self.behavior.get('start_paused')) and not self.pause_mode:
+            self.toggle_pause()
+
+    def write_behavior(self):
+        data = self.prefs.collect_behavior()
+        was_hidden = bool(self.behavior.get('hide_systray'))
+        for key, value in data.items():
+            self.behavior[key] = value
+        save_behavior(self.behavior)
+        self.prefs.read_behavior(self.behavior)
+        hide_tray = bool(self.behavior.get('hide_systray'))
+        if hide_tray:
+            self.tray.hide()
+        else:
+            self.tray.show()
+        if hide_tray and not was_hidden:
+            QMessageBox.information(
+                self.prefs,
+                'BlueProximity',
+                'The tray icon is now hidden. Open BlueProximity from the '
+                'application menu to show this window again.',
+            )
 
     def _tray_activated(self, reason):
         if reason == QSystemTrayIcon.ActivationReason.Trigger:
@@ -456,9 +490,61 @@ class BlueProximityApp(QObject):
         QApplication.instance().quit()
 
 
+INSTANCE_SOCKET = os.path.join(
+    os.getenv('XDG_RUNTIME_DIR', '/tmp'), 'blueproximity.sock')
+
+
+def _try_activate_existing() -> bool:
+    client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    try:
+        client.settimeout(0.3)
+        client.connect(INSTANCE_SOCKET)
+        client.sendall(b'show')
+        return True
+    except OSError:
+        return False
+    finally:
+        client.close()
+
+
+def _listen_for_second_instance(on_show):
+    try:
+        os.unlink(INSTANCE_SOCKET)
+    except FileNotFoundError:
+        pass
+    server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    server.setblocking(False)
+    server.bind(INSTANCE_SOCKET)
+    server.listen(4)
+    notifier = QSocketNotifier(server.fileno(), QSocketNotifier.Type.Read)
+
+    def _accept(_socket=None):
+        try:
+            conn, _addr = server.accept()
+        except BlockingIOError:
+            return
+        try:
+            conn.close()
+        except OSError:
+            pass
+        on_show()
+
+    notifier.activated.connect(_accept)
+    return server, notifier
+
+
 def run_app():
     from blueproximity.i18n import setup_i18n
     setup_i18n()
+
+    app = QApplication(sys.argv)
+    app.setApplicationName('BlueProximity')
+    app.setDesktopFileName('blueproximity')
+    app.setWindowIcon(QIcon(icon_path(ICON_BASE)))
+    app.setQuitOnLastWindowClosed(False)
+
+    if _try_activate_existing():
+        return 0
 
     configs, is_new = load_configs()
     for config in configs:
@@ -467,12 +553,7 @@ def run_app():
         config.append(p)
     configs.sort()
 
-    app = QApplication(sys.argv)
-    app.setApplicationName('BlueProximity')
-    app.setDesktopFileName('blueproximity')
-    app.setWindowIcon(QIcon(icon_path(ICON_BASE)))
-    app.setQuitOnLastWindowClosed(False)
     controller = BlueProximityApp(configs, is_new)
-    # Keep reference alive
     app._blueproximity = controller
+    app._instance_server = _listen_for_second_instance(controller.show_preferences)
     return app.exec()

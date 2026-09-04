@@ -64,6 +64,7 @@ class PreferencesWindow(QMainWindow):
     delete_config_requested = Signal()
     reset_minmax_requested = Signal()
     about_requested = Signal()
+    behavior_changed = Signal()
     closed = Signal()
 
     def __init__(self, parent=None):
@@ -97,9 +98,10 @@ class PreferencesWindow(QMainWindow):
 
         tabs = QTabWidget()
         root.addWidget(tabs, stretch=1)
-        tabs.addTab(self._build_device_tab(), _('Bluetooth Device'))
-        tabs.addTab(self._build_proximity_tab(), _('Proximity Details'))
-        tabs.addTab(self._build_locking_tab(), _('Locking'))
+        tabs.addTab(self._build_device_tab(), 'Bluetooth Device')
+        tabs.addTab(self._build_proximity_tab(), 'Thresholds')
+        tabs.addTab(self._build_locking_tab(), 'Locking')
+        tabs.addTab(self._build_behavior_tab(), 'Environment')
 
         bottom = QHBoxLayout()
         btn_about = QPushButton(_('About'))
@@ -132,20 +134,23 @@ class PreferencesWindow(QMainWindow):
         btn_row.addWidget(self.btn_use)
         layout.addLayout(btn_row)
 
+        self.paired_box = QGroupBox('Current paired device')
+        paired_layout = QVBoxLayout(self.paired_box)
         form = QFormLayout()
         self.entry_mac = QLineEdit()
         self.entry_mac.editingFinished.connect(self._emit_settings)
+        self.entry_mac.textChanged.connect(self._update_paired_section_enabled)
         form.addRow(_('MAC address:'), self.entry_mac)
 
         self.spin_channel = QSpinBox()
         self.spin_channel.setRange(1, 30)
         self.spin_channel.valueChanged.connect(self._emit_settings_reconnect)
         form.addRow(_('RFCOMM channel:'), self.spin_channel)
-        layout.addLayout(form)
+        paired_layout.addLayout(form)
 
         self.btn_scan_channel = QPushButton(_('Scan channels on device'))
         self.btn_scan_channel.clicked.connect(self._toggle_channel_scan)
-        layout.addWidget(self.btn_scan_channel)
+        paired_layout.addWidget(self.btn_scan_channel)
 
         self.table_channels = QTableWidget(0, 2)
         self.table_channels.setHorizontalHeaderLabels([_('Channel'), _('State')])
@@ -154,7 +159,9 @@ class PreferencesWindow(QMainWindow):
         self.table_channels.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
         self.table_channels.itemSelectionChanged.connect(self._channel_selected)
         self.table_channels.hide()
-        layout.addWidget(self.table_channels)
+        paired_layout.addWidget(self.table_channels)
+        layout.addWidget(self.paired_box)
+        self._update_paired_section_enabled()
         return w
 
     def _build_proximity_tab(self) -> QWidget:
@@ -165,6 +172,7 @@ class PreferencesWindow(QMainWindow):
         self.slider_lock_dur, self.spin_lock_dur = self._make_slider_spin(0, 120)
         self.slider_unlock_dist, self.spin_unlock_dist = self._make_slider_spin(0, 127)
         self.slider_unlock_dur, self.spin_unlock_dur = self._make_slider_spin(0, 120)
+        self.slider_scan_period, self.spin_scan_period = self._make_slider_spin(1, 60)
 
         form = QFormLayout()
         form.addRow(_('Lock distance:'), self._slider_spin_row(
@@ -175,19 +183,23 @@ class PreferencesWindow(QMainWindow):
             self.slider_unlock_dist, self.spin_unlock_dist))
         form.addRow(_('Unlock duration (s):'), self._slider_spin_row(
             self.slider_unlock_dur, self.spin_unlock_dur))
+        form.addRow('Scan period (seconds):', self._slider_spin_row(
+            self.slider_scan_period, self.spin_scan_period))
         layout.addLayout(form)
 
+        observed = QGroupBox('Observed distance values')
+        observed_layout = QVBoxLayout(observed)
         self.lab_state = QLabel(_('min: 0 max: 0 state: -'))
-        layout.addWidget(self.lab_state)
+        observed_layout.addWidget(self.lab_state)
         self.slider_act = QSlider()
         self.slider_act.setOrientation(self.slider_lock_dist.orientation())
         self.slider_act.setRange(0, 127)
         self.slider_act.setEnabled(False)
-        layout.addWidget(self.slider_act)
-
+        observed_layout.addWidget(self.slider_act)
         btn_reset = QPushButton(_('Reset Min/Max'))
         btn_reset.clicked.connect(lambda: self.reset_minmax_requested.emit())
-        layout.addWidget(btn_reset)
+        observed_layout.addWidget(btn_reset)
+        layout.addWidget(observed)
         layout.addStretch(1)
         return w
 
@@ -210,31 +222,68 @@ class PreferencesWindow(QMainWindow):
         self.combo_proxi.addItems(PROXIMITY_COMMAND_SUGGESTIONS)
         self.combo_proxi.editTextChanged.connect(self._emit_settings)
 
-        self.slider_proxi = self._make_slider(5, 600)
+        self.slider_proxi, self.spin_proxi = self._make_slider_spin(5, 600)
 
         form = QFormLayout()
         form.addRow(_('Lock command:'), self.combo_lock)
         form.addRow(_('Unlock command:'), self.combo_unlock)
         form.addRow(_('Proximity command:'), self.combo_proxi)
-        form.addRow(_('Proximity interval (s):'), self.slider_proxi)
+        form.addRow(
+            'Proximity command interval (seconds):',
+            self._slider_spin_row(self.slider_proxi, self.spin_proxi),
+        )
         layout.addLayout(form)
+        layout.addStretch(1)
+        return w
 
-        log_box = QGroupBox(_('Logging'))
+    def _build_behavior_tab(self) -> QWidget:
+        w = QWidget()
+        layout = QVBoxLayout(w)
+
+        hint = QLabel(
+            'Autostart uses the standard XDG file in ~/.config/autostart/. '
+            'It works on KDE Plasma and on other desktops that follow that spec '
+            '(GNOME, XFCE, Cinnamon, …), not only KDE.'
+        )
+        hint.setWordWrap(True)
+        layout.addWidget(hint)
+
+        self.check_autostart = QCheckBox('Start BlueProximity automatically at login')
+        self.check_autostart.stateChanged.connect(self._emit_behavior)
+        layout.addWidget(self.check_autostart)
+
+        self.check_hide_tray = QCheckBox('Hide the system tray icon')
+        self.check_hide_tray.stateChanged.connect(self._emit_behavior)
+        layout.addWidget(self.check_hide_tray)
+
+        tray_note = QLabel(
+            'If the tray icon is hidden, open Preferences again from the '
+            'application menu (a second launch shows this window).'
+        )
+        tray_note.setWordWrap(True)
+        layout.addWidget(tray_note)
+
+        self.check_start_paused = QCheckBox('Start in pause mode')
+        self.check_start_paused.stateChanged.connect(self._emit_behavior)
+        layout.addWidget(self.check_start_paused)
+
+        log_box = QGroupBox('Logging')
         log_layout = QFormLayout(log_box)
-        self.check_syslog = QCheckBox(_('Log to syslog'))
+        self.check_syslog = QCheckBox('Log to syslog')
         self.check_syslog.stateChanged.connect(self._emit_settings)
         log_layout.addRow(self.check_syslog)
         self.combo_facility = QComboBox()
         self.combo_facility.addItems(SYSLOG_FACILITIES)
         self.combo_facility.currentTextChanged.connect(self._emit_settings)
-        log_layout.addRow(_('Syslog facility:'), self.combo_facility)
-        self.check_file = QCheckBox(_('Log to file'))
+        log_layout.addRow('Syslog facility:', self.combo_facility)
+        self.check_file = QCheckBox('Log to file')
         self.check_file.stateChanged.connect(self._emit_settings)
         log_layout.addRow(self.check_file)
         self.entry_file = QLineEdit()
         self.entry_file.editingFinished.connect(self._emit_settings)
-        log_layout.addRow(_('Log file:'), self.entry_file)
+        log_layout.addRow('Log file:', self.entry_file)
         layout.addWidget(log_box)
+
         layout.addStretch(1)
         return w
 
@@ -279,6 +328,10 @@ class PreferencesWindow(QMainWindow):
         if self._gone_live and not self._block_signals:
             self.settings_changed_reconnect.emit()
 
+    def _emit_behavior(self, *_args):
+        if self._gone_live and not self._block_signals:
+            self.behavior_changed.emit()
+
     def fill_config_combo(self, configs, active_name: str):
         self._block_signals = True
         self.combo_config.blockSignals(True)
@@ -294,6 +347,7 @@ class PreferencesWindow(QMainWindow):
     def read_settings(self, config):
         self._block_signals = True
         self.entry_mac.setText(config['device_mac'])
+        self._update_paired_section_enabled()
         self.spin_channel.setValue(int(config['device_channel']))
         self.slider_lock_dist.setValue(int(config['lock_distance']))
         self.slider_lock_dur.setValue(int(config['lock_duration']))
@@ -303,6 +357,7 @@ class PreferencesWindow(QMainWindow):
         self._set_combo_text(self.combo_unlock, config['unlock_command'])
         self._set_combo_text(self.combo_proxi, config['proximity_command'])
         self.slider_proxi.setValue(int(config['proximity_interval']))
+        self.slider_scan_period.setValue(int(config.get('scan_period', 1)))
         self.check_syslog.setChecked(bool(config['log_to_syslog']))
         idx = self.combo_facility.findText(config['log_syslog_facility'])
         if idx >= 0:
@@ -310,6 +365,20 @@ class PreferencesWindow(QMainWindow):
         self.check_file.setChecked(bool(config['log_to_file']))
         self.entry_file.setText(config['log_filelog_filename'])
         self._block_signals = False
+
+    def read_behavior(self, behavior):
+        self._block_signals = True
+        self.check_autostart.setChecked(bool(behavior.get('autostart')))
+        self.check_hide_tray.setChecked(bool(behavior.get('hide_systray')))
+        self.check_start_paused.setChecked(bool(behavior.get('start_paused')))
+        self._block_signals = False
+
+    def collect_behavior(self) -> dict:
+        return {
+            'autostart': self.check_autostart.isChecked(),
+            'hide_systray': self.check_hide_tray.isChecked(),
+            'start_paused': self.check_start_paused.isChecked(),
+        }
 
     def _set_combo_text(self, combo: QComboBox, text: str):
         idx = combo.findText(text)
@@ -331,6 +400,7 @@ class PreferencesWindow(QMainWindow):
             'unlock_command': self.combo_unlock.currentText(),
             'proximity_command': self.combo_proxi.currentText(),
             'proximity_interval': int(self.slider_proxi.value()),
+            'scan_period': int(self.slider_scan_period.value()),
             'log_to_syslog': self.check_syslog.isChecked(),
             'log_syslog_facility': self.combo_facility.currentText(),
             'log_to_file': self.check_file.isChecked(),
@@ -368,6 +438,12 @@ class PreferencesWindow(QMainWindow):
             self.table_devices.setItem(row, 0, QTableWidgetItem(mac))
             self.table_devices.setItem(row, 1, QTableWidgetItem(name))
 
+    def _update_paired_section_enabled(self, *_args):
+        if not hasattr(self, 'paired_box'):
+            return
+        has_device = bool(self.entry_mac.text().strip())
+        self.paired_box.setEnabled(has_device)
+
     def _use_selected_device(self):
         rows = self.table_devices.selectionModel().selectedRows()
         if not rows:
@@ -375,6 +451,7 @@ class PreferencesWindow(QMainWindow):
         mac_item = self.table_devices.item(rows[0].row(), 0)
         if mac_item and mac_item.text():
             self.entry_mac.setText(mac_item.text())
+            self._update_paired_section_enabled()
             self._emit_settings()
 
     def _toggle_channel_scan(self):

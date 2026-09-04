@@ -52,6 +52,7 @@ CONF_SPECS = [
     'unlock_command=' + _conf_string_default(_default_unlock),
     'proximity_command=' + _conf_string_default(_default_proximity),
     'proximity_interval=integer(5,600,default=60)',
+    'scan_period=integer(1,60,default=1)',
     'buffer_size=integer(1,255,default=1)',
     'debug_log=boolean(default=True)',
     'log_to_syslog=boolean(default=True)',
@@ -107,6 +108,8 @@ def load_configs():
 
     for filename in os.listdir(directory):
         if not filename.endswith('.conf'):
+            continue
+        if filename == 'behavior.conf':
             continue
         try:
             config = ConfigObj(

@@ -1,3 +1,36 @@
+blueproximity (2.1.1-1) resolute; urgency=medium
+
+  * Thresholds: Observed distance values group; paired-device group gating.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Fri, 04 Sep 2026 15:40:00 +0200
+
+blueproximity (2.1.0-1) resolute; urgency=medium
+
+  * Tabs: Thresholds, Locking, Environment; logging moved to Environment.
+  * Rename proximity interval; add configurable Bluetooth scan period.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Fri, 04 Sep 2026 15:26:00 +0200
+
+blueproximity (2.0.9-1) resolute; urgency=medium
+
+  * Rename tabs: Timing, Desktop; Locking spin box for proximity interval.
+  * Label "Scan period (seconds)" for proximity_interval control.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Fri, 04 Sep 2026 15:10:00 +0200
+
+blueproximity (2.0.8-1) resolute; urgency=medium
+
+  * Drop PySide6.QtNetwork; use a Unix socket for single-instance.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Thu, 03 Sep 2026 18:35:00 +0200
+
+blueproximity (2.0.7-1) resolute; urgency=medium
+
+  * Behavior tab: XDG autostart, hide systray, start paused.
+  * Single-instance: a second launch opens Preferences.
+
+ -- Marco Faenzi <marcofaenzi@users.noreply.github.com>  Thu, 03 Sep 2026 18:32:00 +0200
+
 blueproximity (2.0.6-1) resolute; urgency=medium
 
   * Left-click tray toggles preferences; middle-click toggles pause.
