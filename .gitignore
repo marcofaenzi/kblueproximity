@@ -59,7 +59,10 @@ cover/
 
 # Translations
 *.mo
-*.pot
+# Keep translation sources tracked:
+# *.po and LANG/kblueproximity.pot should be committed
+!LANG/**/*.po
+!LANG/*.pot
 
 # Django stuff:
 *.log

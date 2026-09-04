@@ -69,7 +69,7 @@ class PreferencesWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__()
-        self.setWindowTitle('KBlueProximity preferences')
+        self.setWindowTitle(_('KBlueProximity preferences'))
         self.resize(720, 560)
         self._gone_live = False
         self._scanning_channels = False
@@ -98,10 +98,10 @@ class PreferencesWindow(QMainWindow):
 
         tabs = QTabWidget()
         root.addWidget(tabs, stretch=1)
-        tabs.addTab(self._build_device_tab(), 'Bluetooth Device')
-        tabs.addTab(self._build_proximity_tab(), 'Thresholds')
-        tabs.addTab(self._build_locking_tab(), 'Locking')
-        tabs.addTab(self._build_behavior_tab(), 'Environment')
+        tabs.addTab(self._build_device_tab(), _('Bluetooth Device'))
+        tabs.addTab(self._build_proximity_tab(), _('Thresholds'))
+        tabs.addTab(self._build_locking_tab(), _('Locking'))
+        tabs.addTab(self._build_behavior_tab(), _('Environment'))
 
         bottom = QHBoxLayout()
         btn_about = QPushButton(_('About'))
@@ -134,7 +134,7 @@ class PreferencesWindow(QMainWindow):
         btn_row.addWidget(self.btn_use)
         layout.addLayout(btn_row)
 
-        self.paired_box = QGroupBox('Current paired device')
+        self.paired_box = QGroupBox(_('Current paired device'))
         paired_layout = QVBoxLayout(self.paired_box)
         form = QFormLayout()
         self.entry_mac = QLineEdit()
@@ -183,11 +183,11 @@ class PreferencesWindow(QMainWindow):
             self.slider_unlock_dist, self.spin_unlock_dist))
         form.addRow(_('Unlock duration (s):'), self._slider_spin_row(
             self.slider_unlock_dur, self.spin_unlock_dur))
-        form.addRow('Scan period (seconds):', self._slider_spin_row(
+        form.addRow(_('Scan period (seconds):'), self._slider_spin_row(
             self.slider_scan_period, self.spin_scan_period))
         layout.addLayout(form)
 
-        observed = QGroupBox('Observed distance values')
+        observed = QGroupBox(_('Observed distance values'))
         observed_layout = QVBoxLayout(observed)
         self.lab_state = QLabel(_('min: 0 max: 0 state: -'))
         observed_layout.addWidget(self.lab_state)
@@ -229,7 +229,7 @@ class PreferencesWindow(QMainWindow):
         form.addRow(_('Unlock command:'), self.combo_unlock)
         form.addRow(_('Proximity command:'), self.combo_proxi)
         form.addRow(
-            'Proximity command interval (seconds):',
+            _('Proximity command interval (seconds):'),
             self._slider_spin_row(self.slider_proxi, self.spin_proxi),
         )
         layout.addLayout(form)
@@ -241,47 +241,48 @@ class PreferencesWindow(QMainWindow):
         layout = QVBoxLayout(w)
 
         hint = QLabel(
-            'Autostart uses the standard XDG file in ~/.config/autostart/. '
-            'It works on KDE Plasma and on other desktops that follow that spec '
-            '(GNOME, XFCE, Cinnamon, …), not only KDE.'
+            _('Autostart uses the standard XDG file in ~/.config/autostart/. '
+              'It works on KDE Plasma and on other desktops that follow that spec '
+              '(GNOME, XFCE, Cinnamon, …), not only KDE.')
         )
         hint.setWordWrap(True)
         layout.addWidget(hint)
 
-        self.check_autostart = QCheckBox('Start KBlueProximity automatically at login')
+        self.check_autostart = QCheckBox(
+            _('Start KBlueProximity automatically at login'))
         self.check_autostart.stateChanged.connect(self._emit_behavior)
         layout.addWidget(self.check_autostart)
 
-        self.check_hide_tray = QCheckBox('Hide the system tray icon')
+        self.check_hide_tray = QCheckBox(_('Hide the system tray icon'))
         self.check_hide_tray.stateChanged.connect(self._emit_behavior)
         layout.addWidget(self.check_hide_tray)
 
         tray_note = QLabel(
-            'If the tray icon is hidden, open Preferences again from the '
-            'application menu (a second launch shows this window).'
+            _('If the tray icon is hidden, open Preferences again from the '
+              'application menu (a second launch shows this window).')
         )
         tray_note.setWordWrap(True)
         layout.addWidget(tray_note)
 
-        self.check_start_paused = QCheckBox('Start in pause mode')
+        self.check_start_paused = QCheckBox(_('Start in pause mode'))
         self.check_start_paused.stateChanged.connect(self._emit_behavior)
         layout.addWidget(self.check_start_paused)
 
-        log_box = QGroupBox('Logging')
+        log_box = QGroupBox(_('Logging'))
         log_layout = QFormLayout(log_box)
-        self.check_syslog = QCheckBox('Log to syslog')
+        self.check_syslog = QCheckBox(_('Log to syslog'))
         self.check_syslog.stateChanged.connect(self._emit_settings)
         log_layout.addRow(self.check_syslog)
         self.combo_facility = QComboBox()
         self.combo_facility.addItems(SYSLOG_FACILITIES)
         self.combo_facility.currentTextChanged.connect(self._emit_settings)
-        log_layout.addRow('Syslog facility:', self.combo_facility)
-        self.check_file = QCheckBox('Log to file')
+        log_layout.addRow(_('Syslog facility:'), self.combo_facility)
+        self.check_file = QCheckBox(_('Log to file'))
         self.check_file.stateChanged.connect(self._emit_settings)
         log_layout.addRow(self.check_file)
         self.entry_file = QLineEdit()
         self.entry_file.editingFinished.connect(self._emit_settings)
-        log_layout.addRow('Log file:', self.entry_file)
+        log_layout.addRow(_('Log file:'), self.entry_file)
         layout.addWidget(log_box)
 
         layout.addStretch(1)

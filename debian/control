@@ -1,8 +1,8 @@
 Source: kblueproximity
 Section: utils
 Priority: optional
-Maintainer: Marco Faenzi <marcofaenzi@users.noreply.github.com>
-Build-Depends: debhelper-compat (= 13)
+Maintainer: Marco Faenzi <marco@faenzi.it>
+Build-Depends: debhelper-compat (= 13), gettext
 Standards-Version: 4.7.0
 Rules-Requires-Root: no
 Homepage: https://github.com/marcofaenzi/blueproximity

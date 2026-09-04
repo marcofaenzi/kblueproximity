@@ -1,3 +1,15 @@
+kblueproximity (2.2.2-1) resolute; urgency=medium
+
+  * Full gettext coverage for UI; English source default, Italian catalog.
+
+ -- Marco Faenzi <marco@faenzi.it>  Fri, 04 Sep 2026 16:28:00 +0200
+
+kblueproximity (2.2.1-1) resolute; urgency=medium
+
+  * About/docs: author Marco Faenzi; credit BlueProximity / Lars Friedrichs.
+
+ -- Marco Faenzi <marco@faenzi.it>  Fri, 04 Sep 2026 16:18:00 +0200
+
 kblueproximity (2.2.0-1) resolute; urgency=medium
 
   * Rename application to KBlueProximity (Qt6 / KDE fork of BlueProximity).

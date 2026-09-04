@@ -52,6 +52,20 @@ via Bluetooth and configure its MAC address in Preferences.
 
 Settings live in `~/.kblueproximity/*.conf` (ConfigObj).
 
+## Translations
+
+UI strings use gettext. English is the source language (default).
+
+- Template: `LANG/kblueproximity.pot`
+- Italian: `LANG/it/LC_MESSAGES/kblueproximity.po`
+- English catalog: `LANG/en/LC_MESSAGES/kblueproximity.po`
+
+Compile after editing `.po` files:
+
+```sh
+./addons/compile-translations.sh
+```
+
 ## Release History
 
 * 2.2.0 Renamed application to KBlueProximity (Qt6 / KDE fork)
@@ -59,6 +73,13 @@ Settings live in `~/.kblueproximity/*.conf` (ConfigObj).
 * 2.0.0 Qt6 / KDE rewrite (PySide6)
 * 1.4.x Plasma 6 / Wayland GTK fixes
 * 1.3.0 Python 3 and GTK+ 3
+
+## Authors
+
+* **Marco Faenzi** &lt;marco@faenzi.it&gt; — KBlueProximity (Qt6 / KDE)
+* Based on a fork of **BlueProximity** by Lars Friedrichs
+  &lt;larsfriedrichs@gmx.de&gt;, with later contributions including the
+  Python 3 / GTK 3 port by Rodrigo Gambra-Middleton.
 
 ## License
 Distributed under the GPL v.2 license. See ``COPYING`` for more information.

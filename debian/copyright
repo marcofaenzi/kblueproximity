@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: kblueproximity
-Upstream-Contact: Lars Friedrichs <larsfriedrichs@gmx.de>
+Upstream-Contact: Marco Faenzi <marco@faenzi.it>
 Source: https://github.com/marcofaenzi/blueproximity
 
 Files: *

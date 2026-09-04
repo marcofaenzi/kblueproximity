@@ -5,6 +5,10 @@ export DH_VERBOSE = 1
 %:
 	dh $@
 
+override_dh_auto_build:
+	msgfmt -o LANG/it/LC_MESSAGES/kblueproximity.mo LANG/it/LC_MESSAGES/kblueproximity.po
+	msgfmt -o LANG/en/LC_MESSAGES/kblueproximity.mo LANG/en/LC_MESSAGES/kblueproximity.po
+
 override_dh_auto_install:
 	install -d debian/kblueproximity/usr/share/kblueproximity
 	cp -a kblueproximity debian/kblueproximity/usr/share/kblueproximity/

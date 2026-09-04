@@ -187,7 +187,7 @@ class Proximity(threading.Thread):
                     dist = self.run_cycle(self.dev_mac, self.dev_channel)
                 else:
                     dist = -255
-                    self.ErrorMsg = 'No bluetooth device configured...'
+                    self.ErrorMsg = _('No bluetooth device configured...')
                 lock_cycles = max(1, int(math.ceil(float(self.gone_duration) / scan_period)))
                 unlock_cycles = max(
                     1, int(math.ceil(float(self.active_duration) / scan_period)))

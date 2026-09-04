@@ -1,0 +1,510 @@
+# Italian translations for kblueproximity.
+# Copyright (C) 2026 Marco Faenzi
+# This file is distributed under the same license as the kblueproximity package.
+# Marco Faenzi <marco@faenzi.it>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kblueproximity 2.2.2\n"
+"Report-Msgid-Bugs-To: marco@faenzi.it\n"
+"POT-Creation-Date: 2026-09-04 16:26+0200\n"
+"PO-Revision-Date: 2026-09-04 16:28+0200\n"
+"Last-Translator: Marco Faenzi <marco@faenzi.it>\n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: kblueproximity/bluetooth.py:32
+msgid "The program cannot import the module bluetooth."
+msgstr "Il programma non può importare il modulo bluetooth."
+
+#: kblueproximity/bluetooth.py:33
+msgid ""
+"Please make sure the bluetooth bindings for python as well as bluez are "
+"installed."
+msgstr "Assicurati che i binding Python per bluetooth e bluez siano installati."
+
+#: kblueproximity/bluetooth.py:34 kblueproximity/config.py:16
+msgid "e.g. with Ubuntu Linux, type"
+msgstr "ad es. su Ubuntu Linux, digita"
+
+#: kblueproximity/bluetooth.py:35
+msgid " sudo apt-get install python3-bluez"
+msgstr " sudo apt-get install python3-bluez"
+
+#: kblueproximity/bluetooth.py:107
+msgid "usable"
+msgstr "utilizzabile"
+
+#: kblueproximity/bluetooth.py:109
+msgid "closed or denied"
+msgstr "chiuso o rifiutato"
+
+#: kblueproximity/config.py:14
+msgid "The program cannot import the module ConfigObj or Validator."
+msgstr "Il programma non può importare il modulo ConfigObj o Validator."
+
+#: kblueproximity/config.py:15
+msgid "Please make sure the ConfigObject package for python is installed."
+msgstr "Assicurati che il pacchetto ConfigObj per Python sia installato."
+
+#: kblueproximity/config.py:17
+msgid " sudo apt-get install python3-configobj"
+msgstr " sudo apt-get install python3-configobj"
+
+#: kblueproximity/config.py:88
+#, python-format
+msgid "Copied configuration from '%s' to '%s'."
+msgstr "Configurazione copiata da '%s' a '%s'."
+
+#: kblueproximity/config.py:93
+#, python-format
+msgid "Creating new config directory '%s'."
+msgstr "Creazione della nuova directory di configurazione '%s'."
+
+#: kblueproximity/config.py:97 kblueproximity/config.py:105
+#: kblueproximity/config.py:144 kblueproximity/config.py:150
+#: kblueproximity/config.py:152
+msgid "standard"
+msgstr "standard"
+
+#: kblueproximity/config.py:99
+msgid "Moved old configuration to the new config directory."
+msgstr "Vecchia configurazione spostata nella nuova directory."
+
+#: kblueproximity/config.py:138 kblueproximity/config.py:152
+#, python-format
+msgid "Using config file '%s'."
+msgstr "Uso del file di configurazione '%s'."
+
+#: kblueproximity/config.py:140
+#, python-format
+msgid "'%s' is not a valid config file."
+msgstr "'%s' non è un file di configurazione valido."
+
+#: kblueproximity/config.py:151
+msgid "Creating new configuration."
+msgstr "Creazione di una nuova configurazione."
+
+#: kblueproximity/core.py:23 kblueproximity/core.py:180
+#: kblueproximity/core.py:194 kblueproximity/core.py:208
+msgid "gone"
+msgstr "assente"
+
+#: kblueproximity/core.py:36
+msgid "Initialized..."
+msgstr "Inizializzato..."
+
+#: kblueproximity/core.py:88 kblueproximity/ui/app.py:449
+msgid "No connection found, trying to establish one..."
+msgstr "Nessuna connessione trovata, tentativo di connessione..."
+
+#: kblueproximity/core.py:97
+#, python-format
+msgid "Skipping %s: empty command"
+msgstr "Salto %s: comando vuoto"
+
+#: kblueproximity/core.py:101
+#, python-format
+msgid "Running %s command: %s"
+msgstr "Esecuzione comando %s: %s"
+
+#: kblueproximity/core.py:113
+#, python-format
+msgid "%s finished with exit code %d%s"
+msgstr "%s terminato con codice di uscita %d%s"
+
+#: kblueproximity/core.py:120
+#, python-format
+msgid "%s command failed (exit %d): %s"
+msgstr "Comando %s non riuscito (uscita %d): %s"
+
+#: kblueproximity/core.py:123 kblueproximity/core.py:124
+#, python-format
+msgid "%s command timed out"
+msgstr "Comando %s scaduto per timeout"
+
+#: kblueproximity/core.py:127
+#, python-format
+msgid "%s command error: %s"
+msgstr "Errore comando %s: %s"
+
+#: kblueproximity/core.py:137
+msgid "screen is unlocked"
+msgstr "schermo sbloccato"
+
+#: kblueproximity/core.py:140
+msgid "unlock"
+msgstr "sblocco"
+
+#: kblueproximity/core.py:144 kblueproximity/core.py:160
+#: kblueproximity/core.py:173
+#, python-format
+msgid ""
+"A command for %s has been skipped because the former command did not finish "
+"yet."
+msgstr "Un comando per %s è stato saltato perché il comando precedente non è ancora terminato."
+
+#: kblueproximity/core.py:145
+msgid "unlocking"
+msgstr "sblocco"
+
+#: kblueproximity/core.py:153
+msgid "screen is locked"
+msgstr "schermo bloccato"
+
+#: kblueproximity/core.py:156
+msgid "lock"
+msgstr "blocco"
+
+#: kblueproximity/core.py:161
+msgid "locking"
+msgstr "blocco"
+
+#: kblueproximity/core.py:169 kblueproximity/core.py:174
+msgid "proximity"
+msgstr "prossimità"
+
+#: kblueproximity/core.py:186
+msgid "running..."
+msgstr "in esecuzione..."
+
+#: kblueproximity/core.py:190 kblueproximity/ui/app.py:394
+msgid "No bluetooth device configured..."
+msgstr "Nessun dispositivo Bluetooth configurato..."
+
+#: kblueproximity/core.py:198 kblueproximity/ui/app.py:452
+msgid "active"
+msgstr "attivo"
+
+#: kblueproximity/core.py:219
+#, python-format
+msgid "distance=%d state=%s limits lock<=%d unlock>=%d"
+msgstr "distanza=%d stato=%s limiti blocco<=%d sblocco>=%d"
+
+#: kblueproximity/logger.py:48
+msgid "Could not open logfile '{}' for writing."
+msgstr "Impossibile aprire il file di log '{}' in scrittura."
+
+#: kblueproximity/ui/app.py:75
+#, python-format
+msgid "Scan failed: %s"
+msgstr "Scansione non riuscita: %s"
+
+#: kblueproximity/ui/app.py:132
+msgid "System tray is not available on this desktop."
+msgstr "La system tray non è disponibile su questo desktop."
+
+#: kblueproximity/ui/app.py:143
+msgid "Preferences"
+msgstr "Preferenze"
+
+#: kblueproximity/ui/app.py:147 kblueproximity/ui/app.py:205
+msgid "Pause"
+msgstr "Pausa"
+
+#: kblueproximity/ui/app.py:151 kblueproximity/ui/preferences.py:107
+msgid "About"
+msgstr "Informazioni"
+
+#: kblueproximity/ui/app.py:156
+msgid "Quit"
+msgstr "Esci"
+
+#: kblueproximity/ui/app.py:188
+msgid ""
+"The tray icon is now hidden. Open KBlueProximity from the application menu "
+"to show this window again."
+msgstr "L'icona nella system tray è ora nascosta. Apri KBlueProximity dal menu applicazioni per mostrare di nuovo questa finestra."
+
+#: kblueproximity/ui/app.py:203
+msgid "Resume"
+msgstr "Riprendi"
+
+#: kblueproximity/ui/app.py:270
+msgid "You must enter a name for the new configuration."
+msgstr "Devi inserire un nome per la nuova configurazione."
+
+#: kblueproximity/ui/app.py:278 kblueproximity/ui/app.py:309
+#, python-format
+msgid "A configuration file with the name '%s' already exists."
+msgstr "Esiste già un file di configurazione con il nome '%s'."
+
+#: kblueproximity/ui/app.py:301
+msgid "You must enter a name for the configuration."
+msgstr "Devi inserire un nome per la configurazione."
+
+#: kblueproximity/ui/app.py:323
+#, python-format
+msgid "The configfile '%s' could not be deleted."
+msgstr "Il file di configurazione '%s' non può essere eliminato."
+
+#: kblueproximity/ui/app.py:334
+msgid "The last configuration file cannot be deleted."
+msgstr "L'ultimo file di configurazione non può essere eliminato."
+
+#: kblueproximity/ui/app.py:340
+#, python-format
+msgid "Do you really want to delete the configuration '%s'."
+msgstr "Vuoi davvero eliminare la configurazione '%s'?"
+
+#: kblueproximity/ui/app.py:403
+msgid ""
+"The scanning process tries to connect to each of the 30 possible ports. This "
+"will take some time and you should watch your bluetooth device for any "
+"actions to be taken. If possible click on accept/connect. If you are asked "
+"for a pin your device was not paired properly before, see the manual on how "
+"to fix this."
+msgstr "La scansione prova a collegarsi a ciascuna delle 30 porte possibili. Richiederà un po' di tempo: controlla il dispositivo Bluetooth per eventuali richieste. Se possibile, accetta/connetti. Se viene chiesto un PIN, il dispositivo non era accoppiato correttamente; vedi il manuale."
+
+#: kblueproximity/ui/app.py:440
+msgid ""
+"KBlueProximity\n"
+"-- PAUSED --"
+msgstr "KBlueProximity\n-- IN PAUSA --"
+
+#: kblueproximity/ui/app.py:444
+#, python-format
+msgid ""
+"KBlueProximity\n"
+"Distance: %d"
+msgstr "KBlueProximity\nDistanza: %d"
+
+#: kblueproximity/ui/app.py:465
+msgid "About KBlueProximity"
+msgstr "Informazioni su KBlueProximity"
+
+#: kblueproximity/ui/app.py:467
+#, python-brace-format
+msgid ""
+"<h3>KBlueProximity {version}</h3><p>Locks and unlocks your desktop based on "
+"Bluetooth proximity.</p><p>Qt6 / KDE edition.</p><p><b>Author:</b> Marco "
+"Faenzi<br/><a href=\"mailto:marco@faenzi.it\">marco@faenzi.it</a></"
+"p><p>Based on a fork of <b>BlueProximity</b> by Lars Friedrichs "
+"&lt;larsfriedrichs@gmx.de&gt; and later contributors (including the Python "
+"3 / GTK 3 port).</p><p>Licensed under the GPL.</p><p><a href=\"https://"
+"github.com/marcofaenzi/blueproximity\">https://github.com/marcofaenzi/"
+"blueproximity</a></p>"
+msgstr "<h3>KBlueProximity {version}</h3><p>Blocca e sblocca il desktop in base alla prossimità Bluetooth.</p><p>Edizione Qt6 / KDE.</p><p><b>Autore:</b> Marco Faenzi<br/><a href=\"mailto:marco@faenzi.it\">marco@faenzi.it</a></p><p>Basato su un fork di <b>BlueProximity</b> di Lars Friedrichs &lt;larsfriedrichs@gmx.de&gt; e successivi contributori (incluso il porting a Python 3 / GTK 3).</p><p>Concesso in licenza GPL.</p><p><a href=\"https://github.com/marcofaenzi/blueproximity\">https://github.com/marcofaenzi/blueproximity</a></p>"
+
+#: kblueproximity/ui/app.py:487
+msgid "stopped."
+msgstr "arrestato."
+
+#: kblueproximity/ui/preferences.py:72
+msgid "KBlueProximity preferences"
+msgstr "Preferenze di KBlueProximity"
+
+#: kblueproximity/ui/preferences.py:84
+msgid "Configuration:"
+msgstr "Configurazione:"
+
+#: kblueproximity/ui/preferences.py:88
+msgid "New"
+msgstr "Nuova"
+
+#: kblueproximity/ui/preferences.py:91
+msgid "Rename"
+msgstr "Rinomina"
+
+#: kblueproximity/ui/preferences.py:94
+msgid "Delete"
+msgstr "Elimina"
+
+#: kblueproximity/ui/preferences.py:101
+msgid "Bluetooth Device"
+msgstr "Dispositivo Bluetooth"
+
+#: kblueproximity/ui/preferences.py:102
+msgid "Thresholds"
+msgstr "Soglie"
+
+#: kblueproximity/ui/preferences.py:103
+msgid "Locking"
+msgstr "Blocco"
+
+#: kblueproximity/ui/preferences.py:104
+msgid "Environment"
+msgstr "Ambiente"
+
+#: kblueproximity/ui/preferences.py:111
+msgid "Close"
+msgstr "Chiudi"
+
+#: kblueproximity/ui/preferences.py:121
+msgid "MAC"
+msgstr "MAC"
+
+#: kblueproximity/ui/preferences.py:121
+msgid "Name"
+msgstr "Nome"
+
+#: kblueproximity/ui/preferences.py:129
+msgid "Scan for devices"
+msgstr "Cerca dispositivi"
+
+#: kblueproximity/ui/preferences.py:132
+msgid "Use selected device"
+msgstr "Usa dispositivo selezionato"
+
+#: kblueproximity/ui/preferences.py:137
+msgid "Current paired device"
+msgstr "Dispositivo accoppiato attuale"
+
+#: kblueproximity/ui/preferences.py:143
+msgid "MAC address:"
+msgstr "Indirizzo MAC:"
+
+#: kblueproximity/ui/preferences.py:148
+msgid "RFCOMM channel:"
+msgstr "Canale RFCOMM:"
+
+#: kblueproximity/ui/preferences.py:151 kblueproximity/ui/preferences.py:471
+msgid "Scan channels on device"
+msgstr "Scansiona canali sul dispositivo"
+
+#: kblueproximity/ui/preferences.py:156
+msgid "Channel"
+msgstr "Canale"
+
+#: kblueproximity/ui/preferences.py:156
+msgid "State"
+msgstr "Stato"
+
+#: kblueproximity/ui/preferences.py:178
+msgid "Lock distance:"
+msgstr "Distanza di blocco:"
+
+#: kblueproximity/ui/preferences.py:180
+msgid "Lock duration (s):"
+msgstr "Durata blocco (s):"
+
+#: kblueproximity/ui/preferences.py:182
+msgid "Unlock distance:"
+msgstr "Distanza di sblocco:"
+
+#: kblueproximity/ui/preferences.py:184
+msgid "Unlock duration (s):"
+msgstr "Durata sblocco (s):"
+
+#: kblueproximity/ui/preferences.py:186
+msgid "Scan period (seconds):"
+msgstr "Periodo di scansione (secondi):"
+
+#: kblueproximity/ui/preferences.py:190
+msgid "Observed distance values"
+msgstr "Valori di distanza osservati"
+
+#: kblueproximity/ui/preferences.py:192
+msgid "min: 0 max: 0 state: -"
+msgstr "min: 0 max: 0 stato: -"
+
+#: kblueproximity/ui/preferences.py:199
+msgid "Reset Min/Max"
+msgstr "Azzera min/max"
+
+#: kblueproximity/ui/preferences.py:228
+msgid "Lock command:"
+msgstr "Comando di blocco:"
+
+#: kblueproximity/ui/preferences.py:229
+msgid "Unlock command:"
+msgstr "Comando di sblocco:"
+
+#: kblueproximity/ui/preferences.py:230
+msgid "Proximity command:"
+msgstr "Comando di prossimità:"
+
+#: kblueproximity/ui/preferences.py:232
+msgid "Proximity command interval (seconds):"
+msgstr "Intervallo comando di prossimità (secondi):"
+
+#: kblueproximity/ui/preferences.py:244
+msgid ""
+"Autostart uses the standard XDG file in ~/.config/autostart/. It works on "
+"KDE Plasma and on other desktops that follow that spec (GNOME, XFCE, "
+"Cinnamon, …), not only KDE."
+msgstr "L'avvio automatico usa il file XDG standard in ~/.config/autostart/. Funziona su KDE Plasma e sugli altri desktop che seguono quella specifica (GNOME, XFCE, Cinnamon, …), non solo su KDE."
+
+#: kblueproximity/ui/preferences.py:252
+msgid "Start KBlueProximity automatically at login"
+msgstr "Avvia KBlueProximity automaticamente all'accesso"
+
+#: kblueproximity/ui/preferences.py:256
+msgid "Hide the system tray icon"
+msgstr "Nascondi l'icona nella system tray"
+
+#: kblueproximity/ui/preferences.py:261
+msgid ""
+"If the tray icon is hidden, open Preferences again from the application menu "
+"(a second launch shows this window)."
+msgstr "Se l'icona nella tray è nascosta, apri di nuovo Preferenze dal menu applicazioni (un secondo avvio mostra questa finestra)."
+
+#: kblueproximity/ui/preferences.py:267
+msgid "Start in pause mode"
+msgstr "Avvia in modalità pausa"
+
+#: kblueproximity/ui/preferences.py:271
+msgid "Logging"
+msgstr "Registrazione eventi"
+
+#: kblueproximity/ui/preferences.py:273
+msgid "Log to syslog"
+msgstr "Registra su syslog"
+
+#: kblueproximity/ui/preferences.py:279
+msgid "Syslog facility:"
+msgstr "Facility syslog:"
+
+#: kblueproximity/ui/preferences.py:280
+msgid "Log to file"
+msgstr "Registra su file"
+
+#: kblueproximity/ui/preferences.py:285
+msgid "Log file:"
+msgstr "File di log:"
+
+#: kblueproximity/ui/preferences.py:413
+msgid "min: "
+msgstr "min: "
+
+#: kblueproximity/ui/preferences.py:413
+msgid " max: "
+msgstr " max: "
+
+#: kblueproximity/ui/preferences.py:413
+msgid " state: "
+msgstr " stato: "
+
+#: kblueproximity/ui/preferences.py:426
+msgid "Now scanning..."
+msgstr "Scansione in corso..."
+
+#: kblueproximity/ui/preferences.py:433
+msgid ""
+"No Bluetooth devices found. Check that Bluetooth is enabled and your phone "
+"is paired."
+msgstr "Nessun dispositivo Bluetooth trovato. Verifica che il Bluetooth sia attivo e che il telefono sia accoppiato."
+
+#: kblueproximity/ui/preferences.py:468
+msgid "Stop scanning"
+msgstr "Interrompi scansione"
+
+#: kblueproximity/ui/preferences.py:497
+msgid "New configuration"
+msgstr "Nuova configurazione"
+
+#: kblueproximity/ui/preferences.py:497
+msgid "Name:"
+msgstr "Nome:"
+
+#: kblueproximity/ui/preferences.py:502
+msgid "Rename configuration"
+msgstr "Rinomina configurazione"
+
+#: kblueproximity/ui/preferences.py:502
+msgid "New name:"
+msgstr "Nuovo nome:"

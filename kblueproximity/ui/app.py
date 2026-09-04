@@ -185,8 +185,8 @@ class KBlueProximityApp(QObject):
             QMessageBox.information(
                 self.prefs,
                 'KBlueProximity',
-                'The tray icon is now hidden. Open KBlueProximity from the '
-                'application menu to show this window again.',
+                _('The tray icon is now hidden. Open KBlueProximity from the '
+                  'application menu to show this window again.'),
             )
 
     def _tray_activated(self, reason):
@@ -400,14 +400,12 @@ class KBlueProximityApp(QObject):
         QMessageBox.information(
             self.prefs,
             'KBlueProximity',
-            _(
-                'The scanning process tries to connect to each of '
-                'the 30 possible ports. This will take some time and '
-                'you should watch your bluetooth device for any actions '
-                'to be taken. If possible click on accept/connect. If you '
-                'are asked for a pin your device was not paired properly before, '
-                'see the manual on how to fix this.',
-            ),
+            _('The scanning process tries to connect to each of '
+              'the 30 possible ports. This will take some time and '
+              'you should watch your bluetooth device for any actions '
+              'to be taken. If possible click on accept/connect. If you '
+              'are asked for a pin your device was not paired properly before, '
+              'see the manual on how to fix this.'),
         )
         self.prefs.set_config_management_enabled(False)
         self.prefs.set_channel_scan_active(True)
@@ -439,16 +437,16 @@ class KBlueProximityApp(QObject):
 
         if self.pause_mode:
             self.tray.setIcon(QIcon(icon_path(ICON_PAUSE)))
-            self.tray.setToolTip('KBlueProximity\n-- PAUSED --')
+            self.tray.setToolTip(_('KBlueProximity\n-- PAUSED --'))
             return
 
         distance = -new_val
-        tooltip = 'KBlueProximity\nDistance: %d' % distance
+        tooltip = _('KBlueProximity\nDistance: %d') % distance
 
         connection_state = 0
         con_icons = [ICON_BASE, ICON_ATT, ICON_AWAY, ICON_ERROR]
         for config in self.configs:
-            if config[2].ErrorMsg == 'No connection found, trying to establish one...':
+            if config[2].ErrorMsg == _('No connection found, trying to establish one...'):
                 connection_state = 3
             else:
                 if config[2].State != _('active'):
@@ -469,8 +467,12 @@ class KBlueProximityApp(QObject):
                 '<h3>KBlueProximity {version}</h3>'
                 '<p>Locks and unlocks your desktop based on Bluetooth proximity.</p>'
                 '<p>Qt6 / KDE edition.</p>'
-                '<p>Copyright Lars Friedrichs and contributors.<br/>'
-                'Licensed under the GPL.</p>'
+                '<p><b>Author:</b> Marco Faenzi<br/>'
+                '<a href="mailto:marco@faenzi.it">marco@faenzi.it</a></p>'
+                '<p>Based on a fork of <b>BlueProximity</b> by '
+                'Lars Friedrichs &lt;larsfriedrichs@gmx.de&gt; '
+                'and later contributors (including the Python 3 / GTK 3 port).</p>'
+                '<p>Licensed under the GPL.</p>'
                 '<p><a href="https://github.com/marcofaenzi/blueproximity">'
                 'https://github.com/marcofaenzi/blueproximity</a></p>'
             ).format(version=SW_VERSION),
