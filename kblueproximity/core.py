@@ -7,9 +7,9 @@ import subprocess
 import threading
 import time
 
-from blueproximity.bluetooth import bluetooth, bluez, list_bluetooth_devices
-from blueproximity.i18n import _
-from blueproximity.logger import Logger
+from kblueproximity.bluetooth import bluetooth, bluez, list_bluetooth_devices
+from kblueproximity.i18n import _
+from kblueproximity.logger import Logger
 
 
 class Proximity(threading.Thread):

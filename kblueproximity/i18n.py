@@ -5,8 +5,8 @@ import gettext
 import locale
 import os
 
-from blueproximity import APP_NAME
-from blueproximity.paths import DIST_PATH
+from kblueproximity import APP_NAME
+from kblueproximity.paths import DIST_PATH
 
 
 def _(message: str) -> str:

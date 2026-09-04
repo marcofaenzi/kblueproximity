@@ -14,20 +14,21 @@ from PySide6.QtWidgets import (
     QSystemTrayIcon,
 )
 
-from blueproximity import SW_VERSION
-from blueproximity.behavior import load_behavior, save_behavior
-from blueproximity.config import load_configs
-from blueproximity.core import Proximity
-from blueproximity.i18n import _
-from blueproximity.paths import (
+from kblueproximity import SW_VERSION
+from kblueproximity.behavior import load_behavior, save_behavior
+from kblueproximity.config import load_configs
+from kblueproximity.core import Proximity
+from kblueproximity.i18n import _
+from kblueproximity.paths import (
     ICON_ATT,
     ICON_AWAY,
     ICON_BASE,
     ICON_ERROR,
     ICON_PAUSE,
+    conf_dir,
     icon_path,
 )
-from blueproximity.ui.preferences import PreferencesWindow
+from kblueproximity.ui.preferences import PreferencesWindow
 
 
 class ChannelScanWorker(QObject):
@@ -45,7 +46,7 @@ class ChannelScanWorker(QObject):
 
     @Slot()
     def run(self):
-        from blueproximity.bluetooth import scan_rfcomm_port
+        from kblueproximity.bluetooth import scan_rfcomm_port
 
         for port in range(1, 31):
             if self._stop:
@@ -76,7 +77,7 @@ class DeviceScanWorker(QObject):
         self.finished.emit(macs)
 
 
-class BlueProximityApp(QObject):
+class KBlueProximityApp(QObject):
     def __init__(self, configs, show_window_on_start: bool):
         super().__init__()
         self.configs = configs
@@ -127,14 +128,14 @@ class BlueProximityApp(QObject):
         if not QSystemTrayIcon.isSystemTrayAvailable():
             QMessageBox.critical(
                 None,
-                'BlueProximity',
+                'KBlueProximity',
                 _('System tray is not available on this desktop.'),
             )
             sys.exit(1)
 
         self.tray = QSystemTrayIcon(self)
         self.tray.setIcon(QIcon(icon_path(ICON_ERROR)))
-        self.tray.setToolTip('BlueProximity')
+        self.tray.setToolTip('KBlueProximity')
         self.tray.activated.connect(self._tray_activated)
 
         from PySide6.QtWidgets import QMenu
@@ -183,8 +184,8 @@ class BlueProximityApp(QObject):
         if hide_tray and not was_hidden:
             QMessageBox.information(
                 self.prefs,
-                'BlueProximity',
-                'The tray icon is now hidden. Open BlueProximity from the '
+                'KBlueProximity',
+                'The tray icon is now hidden. Open KBlueProximity from the '
                 'application menu to show this window again.',
             )
 
@@ -265,16 +266,15 @@ class BlueProximityApp(QObject):
         if not newconfig:
             QMessageBox.warning(
                 self.prefs,
-                'BlueProximity',
+                'KBlueProximity',
                 _('You must enter a name for the new configuration.'),
             )
             return
-        newname = os.path.join(
-            os.getenv('HOME', ''), '.blueproximity', newconfig + '.conf')
+        newname = os.path.join(conf_dir(), newconfig + '.conf')
         if os.path.exists(newname):
             QMessageBox.warning(
                 self.prefs,
-                'BlueProximity',
+                'KBlueProximity',
                 _("A configuration file with the name '%s' already exists.") % newname,
             )
             return
@@ -297,16 +297,15 @@ class BlueProximityApp(QObject):
         if not newconfig:
             QMessageBox.warning(
                 self.prefs,
-                'BlueProximity',
+                'KBlueProximity',
                 _('You must enter a name for the configuration.'),
             )
             return
-        newname = os.path.join(
-            os.getenv('HOME', ''), '.blueproximity', newconfig + '.conf')
+        newname = os.path.join(conf_dir(), newconfig + '.conf')
         if os.path.exists(newname):
             QMessageBox.warning(
                 self.prefs,
-                'BlueProximity',
+                'KBlueProximity',
                 _("A configuration file with the name '%s' already exists.") % newname,
             )
             return
@@ -331,13 +330,13 @@ class BlueProximityApp(QObject):
         if len(self.configs) == 1:
             QMessageBox.warning(
                 self.prefs,
-                'BlueProximity',
+                'KBlueProximity',
                 _('The last configuration file cannot be deleted.'),
             )
             return
         reply = QMessageBox.question(
             self.prefs,
-            'BlueProximity',
+            'KBlueProximity',
             _("Do you really want to delete the configuration '%s'.") % self.configname,
         )
         if reply != QMessageBox.StandardButton.Yes:
@@ -391,7 +390,7 @@ class BlueProximityApp(QObject):
         if not mac:
             QMessageBox.warning(
                 self.prefs,
-                'BlueProximity',
+                'KBlueProximity',
                 _('No bluetooth device configured...'),
             )
             if not was_paused:
@@ -400,7 +399,7 @@ class BlueProximityApp(QObject):
 
         QMessageBox.information(
             self.prefs,
-            'BlueProximity',
+            'KBlueProximity',
             _(
                 'The scanning process tries to connect to each of '
                 'the 30 possible ports. This will take some time and '
@@ -440,11 +439,11 @@ class BlueProximityApp(QObject):
 
         if self.pause_mode:
             self.tray.setIcon(QIcon(icon_path(ICON_PAUSE)))
-            self.tray.setToolTip('BlueProximity\n-- PAUSED --')
+            self.tray.setToolTip('KBlueProximity\n-- PAUSED --')
             return
 
         distance = -new_val
-        tooltip = 'BlueProximity\nDistance: %d' % distance
+        tooltip = 'KBlueProximity\nDistance: %d' % distance
 
         connection_state = 0
         con_icons = [ICON_BASE, ICON_ATT, ICON_AWAY, ICON_ERROR]
@@ -465,9 +464,9 @@ class BlueProximityApp(QObject):
     def show_about(self):
         about = QMessageBox(
             QMessageBox.Icon.NoIcon,
-            _('About BlueProximity'),
+            _('About KBlueProximity'),
             _(
-                '<h3>BlueProximity {version}</h3>'
+                '<h3>KBlueProximity {version}</h3>'
                 '<p>Locks and unlocks your desktop based on Bluetooth proximity.</p>'
                 '<p>Qt6 / KDE edition.</p>'
                 '<p>Copyright Lars Friedrichs and contributors.<br/>'
@@ -491,7 +490,7 @@ class BlueProximityApp(QObject):
 
 
 INSTANCE_SOCKET = os.path.join(
-    os.getenv('XDG_RUNTIME_DIR', '/tmp'), 'blueproximity.sock')
+    os.getenv('XDG_RUNTIME_DIR', '/tmp'), 'kblueproximity.sock')
 
 
 def _try_activate_existing() -> bool:
@@ -534,12 +533,12 @@ def _listen_for_second_instance(on_show):
 
 
 def run_app():
-    from blueproximity.i18n import setup_i18n
+    from kblueproximity.i18n import setup_i18n
     setup_i18n()
 
     app = QApplication(sys.argv)
-    app.setApplicationName('BlueProximity')
-    app.setDesktopFileName('blueproximity')
+    app.setApplicationName('KBlueProximity')
+    app.setDesktopFileName('kblueproximity')
     app.setWindowIcon(QIcon(icon_path(ICON_BASE)))
     app.setQuitOnLastWindowClosed(False)
 
@@ -553,7 +552,7 @@ def run_app():
         config.append(p)
     configs.sort()
 
-    controller = BlueProximityApp(configs, is_new)
-    app._blueproximity = controller
+    controller = KBlueProximityApp(configs, is_new)
+    app._kblueproximity = controller
     app._instance_server = _listen_for_second_instance(controller.show_preferences)
     return app.exec()

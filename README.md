@@ -1,5 +1,5 @@
 ---
-BlueProximity
+KBlueProximity
 ---
 >This software helps you add a little more security to your
 desktop. It does so by detecting one of your bluetooth devices,
@@ -7,11 +7,10 @@ most likely your mobile phone, and keeping track of its distance.
 
 [![Python Version][python-image]][python-url]
 
->## Note from the maintainer of this fork ##
->Version **2.0** is a Qt6 / KDE rewrite (PySide6). GTK3, Glade and
-Ayatana AppIndicator have been removed. Existing configs in
-`~/.blueproximity/` remain compatible.
-> - Marco Faenzi
+>## Note ##
+>**KBlueProximity** is the Qt6 / KDE fork of BlueProximity (PySide6).
+GTK3, Glade and Ayatana AppIndicator have been removed. Existing configs
+from `~/.blueproximity/` are copied to `~/.kblueproximity/` on first run.
 
 ## Description from the original author
 >If you move away from your computer and the distance is above
@@ -25,15 +24,10 @@ magically without any interaction
 
 ## Installation
 
-### Ubuntu 26.04 LTS (Plasma 6 / Wayland) — Qt6 edition
-
-Build and install the Debian package from source:
+### Ubuntu 26.04 LTS (Plasma 6 / Wayland)
 
 ```sh
-sudo apt install debhelper python3-pyside6.qtwidgets python3-configobj
-cd blueproximity
-# or use the manual packaging script / prebuilt .deb
-sudo apt install ../blueproximity_2.0.0-1_all.deb
+sudo apt install ../kblueproximity_2.2.0-1_all.deb
 ```
 
 Runtime dependencies (installed automatically with the package):
@@ -47,34 +41,24 @@ sudo apt install python3-pyside6.qtcore python3-pyside6.qtgui \
 Run from a source checkout:
 
 ```sh
-cd blueproximity
-PYTHONPATH=. python3 -m blueproximity
+PYTHONPATH=. python3 -m kblueproximity
 ```
 
 On Plasma 6 the default lock/unlock commands use `loginctl` and the
 freedesktop ScreenSaver D-Bus interface via `qdbus6`. Pair your phone
 via Bluetooth and configure its MAC address in Preferences.
 
-### Development setup
-
-```sh
-cd blueproximity
-pip3 install -r requirements.txt   # configobj / pybluez as needed
-# system packages: python3-pyside6.qtwidgets python3-bluez python3-dbus
-PYTHONPATH=. python3 -m blueproximity
-```
-
 ## Configuration
 
-Settings live in `~/.blueproximity/*.conf` (ConfigObj). No path editing
-is required; resource paths are auto-detected from the install location.
+Settings live in `~/.kblueproximity/*.conf` (ConfigObj).
 
 ## Release History
 
-* 2.0.0 Qt6 / KDE rewrite (PySide6), system tray StatusNotifierItem
-* 1.4.x Plasma 6 / Wayland GTK fixes, Debian packaging
-* 1.3.3 Bug fixes
-* 1.3.0 Updated application so it now runs in Python 3 and GTK+ 3
+* 2.2.0 Renamed application to KBlueProximity (Qt6 / KDE fork)
+* 2.1.x Thresholds / Environment UI, scan period, tray UX
+* 2.0.0 Qt6 / KDE rewrite (PySide6)
+* 1.4.x Plasma 6 / Wayland GTK fixes
+* 1.3.0 Python 3 and GTK+ 3
 
 ## License
 Distributed under the GPL v.2 license. See ``COPYING`` for more information.

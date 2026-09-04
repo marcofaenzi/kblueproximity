@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import sys
 
-from blueproximity.i18n import _
+from kblueproximity.i18n import _
 
 IMPORT_BT = 0
 bluetooth = None

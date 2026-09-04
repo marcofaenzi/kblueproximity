@@ -4,8 +4,8 @@ from __future__ import annotations
 import os
 import sys
 
-from blueproximity.i18n import _
-from blueproximity.paths import conf_dir
+from kblueproximity.i18n import _
+from kblueproximity.paths import conf_dir
 
 try:
     from configobj import ConfigObj
@@ -39,7 +39,7 @@ def _conf_string_default(value: str) -> str:
 
 
 _default_lock, _default_unlock, _default_proximity = get_default_commands()
-_default_log_file = os.path.join(conf_dir(), 'blueproximity.log')
+_default_log_file = os.path.join(conf_dir(), 'kblueproximity.log')
 
 CONF_SPECS = [
     'device_mac=string(max=17,default="")',
@@ -80,6 +80,14 @@ SYSLOG_FACILITIES = [
 
 def ensure_conf_dir() -> str:
     path = conf_dir()
+    legacy = os.path.join(os.getenv('HOME', ''), '.blueproximity')
+    if not os.path.isdir(path) and os.path.isdir(legacy):
+        try:
+            import shutil
+            shutil.copytree(legacy, path)
+            print(_("Copied configuration from '%s' to '%s'.") % (legacy, path))
+        except OSError:
+            pass
     try:
         os.mkdir(path)
         print(_("Creating new config directory '%s'.") % path)
@@ -89,6 +97,13 @@ def ensure_conf_dir() -> str:
                 os.path.join(path, _('standard') + '.conf'),
             )
             print(_("Moved old configuration to the new config directory."))
+        except OSError:
+            pass
+        try:
+            os.rename(
+                os.path.join(os.getenv('HOME', ''), '.kblueproximityrc'),
+                os.path.join(path, _('standard') + '.conf'),
+            )
         except OSError:
             pass
     except FileExistsError:

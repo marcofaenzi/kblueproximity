@@ -1,4 +1,4 @@
-Source: blueproximity
+Source: kblueproximity
 Section: utils
 Priority: optional
 Maintainer: Marco Faenzi <marcofaenzi@users.noreply.github.com>
@@ -9,7 +9,7 @@ Homepage: https://github.com/marcofaenzi/blueproximity
 Vcs-Git: https://github.com/marcofaenzi/blueproximity.git
 Vcs-Browser: https://github.com/marcofaenzi/blueproximity
 
-Package: blueproximity
+Package: kblueproximity
 Architecture: all
 Depends: ${misc:Depends},
          python3,
@@ -23,8 +23,11 @@ Depends: ${misc:Depends},
          qdbus-qt6,
          python3:any
 Recommends: bluez-tools
+Conflicts: blueproximity
+Replaces: blueproximity
+Provides: blueproximity
 Description: Bluetooth proximity detector for automatic screen lock/unlock
- BlueProximity locks and unlocks your desktop based on the proximity of a
+ KBlueProximity locks and unlocks your desktop based on the proximity of a
  Bluetooth device (typically a mobile phone). This Qt6 edition targets
  Plasma 6 / Wayland via loginctl and the freedesktop ScreenSaver D-Bus
  interface, with a system tray StatusNotifierItem.

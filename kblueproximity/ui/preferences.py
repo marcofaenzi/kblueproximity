@@ -24,13 +24,13 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from blueproximity.config import (
+from kblueproximity.config import (
     LOCK_COMMAND_SUGGESTIONS,
     PROXIMITY_COMMAND_SUGGESTIONS,
     SYSLOG_FACILITIES,
     UNLOCK_COMMAND_SUGGESTIONS,
 )
-from blueproximity.i18n import _
+from kblueproximity.i18n import _
 
 
 class NameDialog(QDialog):
@@ -69,7 +69,7 @@ class PreferencesWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__()
-        self.setWindowTitle('BlueProximity preferences')
+        self.setWindowTitle('KBlueProximity preferences')
         self.resize(720, 560)
         self._gone_live = False
         self._scanning_channels = False
@@ -248,7 +248,7 @@ class PreferencesWindow(QMainWindow):
         hint.setWordWrap(True)
         layout.addWidget(hint)
 
-        self.check_autostart = QCheckBox('Start BlueProximity automatically at login')
+        self.check_autostart = QCheckBox('Start KBlueProximity automatically at login')
         self.check_autostart.stateChanged.connect(self._emit_behavior)
         layout.addWidget(self.check_autostart)
 

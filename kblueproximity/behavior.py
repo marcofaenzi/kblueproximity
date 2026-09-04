@@ -4,8 +4,8 @@ from __future__ import annotations
 import os
 import shutil
 
-from blueproximity.config import ConfigObj, Validator
-from blueproximity.paths import ICON_BASE, conf_dir, icon_path
+from kblueproximity.config import ConfigObj, Validator
+from kblueproximity.paths import ICON_BASE, conf_dir, icon_path
 
 BEHAVIOR_SPECS = [
     'autostart=boolean(default=False)',
@@ -13,7 +13,7 @@ BEHAVIOR_SPECS = [
     'start_paused=boolean(default=False)',
 ]
 
-AUTOSTART_FILENAME = 'blueproximity.desktop'
+AUTOSTART_FILENAME = 'kblueproximity.desktop'
 
 
 def autostart_dir() -> str:
@@ -29,9 +29,9 @@ def behavior_path() -> str:
 
 
 def autostart_exec() -> str:
-    if os.path.isfile('/usr/bin/blueproximity'):
-        return '/usr/bin/blueproximity'
-    return 'python3 -m blueproximity'
+    if os.path.isfile('/usr/bin/kblueproximity'):
+        return '/usr/bin/kblueproximity'
+    return 'python3 -m kblueproximity'
 
 
 def is_autostart_enabled() -> bool:
@@ -62,7 +62,7 @@ def set_autostart_enabled(enabled: bool) -> None:
         '[Desktop Entry]\n'
         'Type=Application\n'
         'Version=1.0\n'
-        'Name=BlueProximity\n'
+        'Name=KBlueProximity\n'
         'Comment=Bluetooth proximity lock for the desktop\n'
         f'Exec={autostart_exec()}\n'
         f'Icon={icon}\n'
@@ -76,7 +76,7 @@ def set_autostart_enabled(enabled: bool) -> None:
     with open(path, 'w', encoding='utf-8') as handle:
         handle.write(contents)
     try:
-        shutil.copymode('/usr/share/applications/blueproximity.desktop', path)
+        shutil.copymode('/usr/share/applications/kblueproximity.desktop', path)
     except OSError:
         pass
 

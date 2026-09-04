@@ -12,22 +12,22 @@ def resolve_dist_path() -> str:
     candidates = [
         os.path.join(_PKG_DIR, 'resources'),
         _REPO_ROOT,
-        '/usr/share/blueproximity',
+        '/usr/share/kblueproximity',
         os.getcwd(),
     ]
     for path in candidates:
-        if os.path.isfile(os.path.join(path, 'blueproximity_base.svg')):
+        if os.path.isfile(os.path.join(path, 'kblueproximity_base.svg')):
             return path if path.endswith(os.sep) else path + os.sep
     return _REPO_ROOT if _REPO_ROOT.endswith(os.sep) else _REPO_ROOT + os.sep
 
 
 DIST_PATH = resolve_dist_path()
 
-ICON_BASE = 'blueproximity_base.svg'
-ICON_ATT = 'blueproximity_attention.svg'
-ICON_AWAY = 'blueproximity_nocon.svg'
-ICON_ERROR = 'blueproximity_error.svg'
-ICON_PAUSE = 'blueproximity_pause.svg'
+ICON_BASE = 'kblueproximity_base.svg'
+ICON_ATT = 'kblueproximity_attention.svg'
+ICON_AWAY = 'kblueproximity_nocon.svg'
+ICON_ERROR = 'kblueproximity_error.svg'
+ICON_PAUSE = 'kblueproximity_pause.svg'
 
 
 def icon_path(name: str) -> str:
@@ -35,4 +35,4 @@ def icon_path(name: str) -> str:
 
 
 def conf_dir() -> str:
-    return os.path.join(os.getenv('HOME', ''), '.blueproximity')
+    return os.path.join(os.getenv('HOME', ''), '.kblueproximity')

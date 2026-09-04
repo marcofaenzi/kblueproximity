@@ -1,4 +1,4 @@
-"""Entry point: python3 -m blueproximity"""
+"""Entry point: python3 -m kblueproximity"""
 from __future__ import annotations
 
 import signal
@@ -7,7 +7,7 @@ import sys
 
 def main():
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    from blueproximity.ui.app import run_app
+    from kblueproximity.ui.app import run_app
     raise SystemExit(run_app())
 
 

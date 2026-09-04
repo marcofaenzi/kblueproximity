@@ -4,7 +4,7 @@ from __future__ import annotations
 import syslog
 import time
 
-from blueproximity.i18n import _
+from kblueproximity.i18n import _
 
 
 class Logger:
@@ -28,7 +28,7 @@ class Logger:
 
     def enable_syslogging(self, facility):
         self.syslog_facility = self.getFacilityFromString(facility)
-        syslog.openlog('blueproximity', syslog.LOG_PID)
+        syslog.openlog('kblueproximity', syslog.LOG_PID)
         self.syslogging = True
 
     def disable_syslogging(self):
@@ -61,7 +61,7 @@ class Logger:
             syslog.syslog(self.syslog_facility | syslog.LOG_NOTICE, line)
         if self.filelogging:
             try:
-                self.flog.write(time.ctime() + ' blueproximity: ' + line + '\n')
+                self.flog.write(time.ctime() + ' kblueproximity: ' + line + '\n')
                 self.flog.flush()
             except Exception:
                 self.disable_filelogging()

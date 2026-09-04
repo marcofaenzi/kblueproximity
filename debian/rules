@@ -6,18 +6,18 @@ export DH_VERBOSE = 1
 	dh $@
 
 override_dh_auto_install:
-	install -d debian/blueproximity/usr/share/blueproximity
-	cp -a blueproximity debian/blueproximity/usr/share/blueproximity/
-	find debian/blueproximity/usr/share/blueproximity -type d -name __pycache__ -exec rm -rf {} +
-	install -m 644 proximity.py *.svg debian/blueproximity/usr/share/blueproximity/
-	cp -a LANG debian/blueproximity/usr/share/blueproximity/
-	install -d debian/blueproximity/usr/bin
-	install -m 755 addons/blueproximity debian/blueproximity/usr/bin/blueproximity
-	install -d debian/blueproximity/usr/share/applications
-	install -m 644 addons/blueproximity.desktop debian/blueproximity/usr/share/applications/
-	install -d debian/blueproximity/usr/share/pixmaps
-	install -m 644 addons/blueproximity.xpm debian/blueproximity/usr/share/pixmaps/
-	install -d debian/blueproximity/usr/share/doc/blueproximity
-	install -m 644 README.md COPYING ChangeLog debian/blueproximity/usr/share/doc/blueproximity/
-	install -d debian/blueproximity/usr/share/man/man1
-	gzip -9 -c doc/blueproximity.1 > debian/blueproximity/usr/share/man/man1/blueproximity.1.gz
+	install -d debian/kblueproximity/usr/share/kblueproximity
+	cp -a kblueproximity debian/kblueproximity/usr/share/kblueproximity/
+	find debian/kblueproximity/usr/share/kblueproximity -type d -name __pycache__ -exec rm -rf {} +
+	install -m 644 proximity.py *.svg debian/kblueproximity/usr/share/kblueproximity/
+	cp -a LANG debian/kblueproximity/usr/share/kblueproximity/
+	install -d debian/kblueproximity/usr/bin
+	install -m 755 addons/kblueproximity debian/kblueproximity/usr/bin/kblueproximity
+	install -d debian/kblueproximity/usr/share/applications
+	install -m 644 addons/kblueproximity.desktop debian/kblueproximity/usr/share/applications/
+	install -d debian/kblueproximity/usr/share/pixmaps
+	install -m 644 addons/kblueproximity.xpm debian/kblueproximity/usr/share/pixmaps/
+	install -d debian/kblueproximity/usr/share/doc/kblueproximity
+	install -m 644 README.md COPYING ChangeLog debian/kblueproximity/usr/share/doc/kblueproximity/
+	install -d debian/kblueproximity/usr/share/man/man1
+	gzip -9 -c doc/kblueproximity.1 > debian/kblueproximity/usr/share/man/man1/kblueproximity.1.gz

@@ -1,4 +1,0 @@
-#!/bin/bash
-# BlueProximity startup script (Qt6 / KDE edition)
-export PYTHONPATH="/usr/share/blueproximity${PYTHONPATH:+:$PYTHONPATH}"
-exec python3 -m blueproximity "$@"

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Name[de_DE]=KBlueProximity
+Exec=/usr/bin/kblueproximity
+Icon[de_DE]=/usr/share/kblueproximity/kblueproximity_base.svg
+Name=KBlueProximity
+Icon=/usr/share/kblueproximity/kblueproximity_base.svg
+Categories=Utility;Security;
+StartupNotify=false
