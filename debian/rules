@@ -3,25 +3,29 @@
 export DH_VERBOSE = 1
 
 %:
-	dh $@
+	dh $@ --with python3
+
+override_dh_auto_configure:
 
 override_dh_auto_build:
-	msgfmt -o LANG/it/LC_MESSAGES/kblueproximity.mo LANG/it/LC_MESSAGES/kblueproximity.po
-	msgfmt -o LANG/en/LC_MESSAGES/kblueproximity.mo LANG/en/LC_MESSAGES/kblueproximity.po
+	msgfmt -o LANG/it/LC_MESSAGES/kblueproximity.mo \
+		LANG/it/LC_MESSAGES/kblueproximity.po
+	msgfmt -o LANG/en/LC_MESSAGES/kblueproximity.mo \
+		LANG/en/LC_MESSAGES/kblueproximity.po
+
+override_dh_auto_test:
 
 override_dh_auto_install:
-	install -d debian/kblueproximity/usr/share/kblueproximity
-	cp -a kblueproximity debian/kblueproximity/usr/share/kblueproximity/
-	find debian/kblueproximity/usr/share/kblueproximity -type d -name __pycache__ -exec rm -rf {} +
-	install -m 644 proximity.py *.svg debian/kblueproximity/usr/share/kblueproximity/
-	cp -a LANG debian/kblueproximity/usr/share/kblueproximity/
-	install -d debian/kblueproximity/usr/bin
-	install -m 755 addons/kblueproximity debian/kblueproximity/usr/bin/kblueproximity
-	install -d debian/kblueproximity/usr/share/applications
-	install -m 644 addons/kblueproximity.desktop debian/kblueproximity/usr/share/applications/
-	install -d debian/kblueproximity/usr/share/pixmaps
-	install -m 644 addons/kblueproximity.xpm debian/kblueproximity/usr/share/pixmaps/
-	install -d debian/kblueproximity/usr/share/doc/kblueproximity
-	install -m 644 README.md COPYING ChangeLog debian/kblueproximity/usr/share/doc/kblueproximity/
-	install -d debian/kblueproximity/usr/share/man/man1
-	gzip -9 -c doc/kblueproximity.1 > debian/kblueproximity/usr/share/man/man1/kblueproximity.1.gz
+	install -d debian/kblueproximity/usr/share/kblueproximity/LANG/it/LC_MESSAGES
+	install -d debian/kblueproximity/usr/share/kblueproximity/LANG/en/LC_MESSAGES
+	install -m 644 LANG/it/LC_MESSAGES/kblueproximity.mo \
+		debian/kblueproximity/usr/share/kblueproximity/LANG/it/LC_MESSAGES/
+	install -m 644 LANG/en/LC_MESSAGES/kblueproximity.mo \
+		debian/kblueproximity/usr/share/kblueproximity/LANG/en/LC_MESSAGES/
+
+override_dh_install:
+	dh_install
+	find debian/kblueproximity -type d -name __pycache__ -exec rm -rf {} +
+
+override_dh_python3:
+	dh_python3 /usr/share/kblueproximity

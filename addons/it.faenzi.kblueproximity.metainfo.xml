@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>it.faenzi.kblueproximity</id>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-2.0-only</project_license>
+  <name>KBlueProximity</name>
+  <summary>Lock and unlock the desktop based on Bluetooth proximity</summary>
+  <summary xml:lang="it">Blocca e sblocca il desktop in base alla prossimità Bluetooth</summary>
+  <description>
+    <p>
+      KBlueProximity monitors a paired Bluetooth device (typically a phone)
+      and locks the session when you walk away, then unlocks it when you
+      return. Distance thresholds and lock/unlock commands are configurable.
+    </p>
+    <p xml:lang="it">
+      KBlueProximity monitora un dispositivo Bluetooth associato (in genere
+      un telefono) e blocca la sessione quando ti allontani, sbloccandola al
+      ritorno. Soglie di distanza e comandi di blocco/sblocco sono configurabili.
+    </p>
+    <p>
+      This Qt6 edition targets Plasma 6 and other desktops that implement
+      loginctl and the freedesktop ScreenSaver interface. It is a maintained
+      fork of BlueProximity.
+    </p>
+    <p xml:lang="it">
+      Questa edizione Qt6 è pensata per Plasma 6 e per gli altri desktop che
+      implementano loginctl e l'interfaccia ScreenSaver freedesktop. È un
+      fork mantenuto di BlueProximity.
+    </p>
+  </description>
+  <url type="homepage">https://github.com/marcofaenzi/kblueproximity</url>
+  <url type="bugtracker">https://github.com/marcofaenzi/kblueproximity/issues</url>
+  <launchable type="desktop-id">kblueproximity.desktop</launchable>
+  <provides>
+    <binary>kblueproximity</binary>
+  </provides>
+  <developer id="it.faenzi">
+    <name>Marco Faenzi</name>
+  </developer>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="2.2.3" date="2026-09-04"/>
+  </releases>
+  <categories>
+    <category>Utility</category>
+    <category>Security</category>
+  </categories>
+</component>

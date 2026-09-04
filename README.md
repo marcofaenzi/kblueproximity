@@ -24,10 +24,14 @@ magically without any interaction
 
 ## Installation
 
-### Ubuntu 26.04 LTS (Plasma 6 / Wayland)
+Debian packaging lives in `debian/` (source format 3.0 (quilt), target
+*unstable*). See `debian/README.source` for how to produce the orig
+tarball and build.
+
+### Ubuntu 26.04 LTS / Debian (Plasma 6 / Wayland)
 
 ```sh
-sudo apt install ../kblueproximity_2.2.0-1_all.deb
+sudo apt install ../kblueproximity_2.2.3-1_all.deb
 ```
 
 Runtime dependencies (installed automatically with the package):
@@ -68,6 +72,7 @@ Compile after editing `.po` files:
 
 ## Release History
 
+* 2.2.3 Debian packaging for unstable (quilt, AppStream, desktop file)
 * 2.2.0 Renamed application to KBlueProximity (Qt6 / KDE fork)
 * 2.1.x Thresholds / Environment UI, scan period, tray UX
 * 2.0.0 Qt6 / KDE rewrite (PySide6)

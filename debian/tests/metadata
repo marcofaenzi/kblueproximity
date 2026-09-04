@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+desktop-file-validate /usr/share/applications/kblueproximity.desktop
+appstreamcli validate --no-net /usr/share/metainfo/it.faenzi.kblueproximity.metainfo.xml

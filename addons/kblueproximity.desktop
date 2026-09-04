@@ -1,12 +1,15 @@
 [Desktop Entry]
-Encoding=UTF-8
-Version=1.0
 Type=Application
-Terminal=false
-Name[de_DE]=KBlueProximity
-Exec=/usr/bin/kblueproximity
-Icon[de_DE]=/usr/share/kblueproximity/kblueproximity_base.svg
+Version=1.0
 Name=KBlueProximity
-Icon=/usr/share/kblueproximity/kblueproximity_base.svg
-Categories=Utility;Security;
+GenericName=Bluetooth proximity lock
+GenericName[it]=Blocco per prossimità Bluetooth
+Comment=Lock and unlock the desktop based on Bluetooth device proximity
+Comment[it]=Blocca e sblocca il desktop in base alla prossimità di un dispositivo Bluetooth
+Exec=kblueproximity
+Icon=kblueproximity
+Terminal=false
+Categories=Qt;KDE;System;Security;
+Keywords=bluetooth;lock;proximity;security;screensaver;
+Keywords[it]=bluetooth;blocco;prossimità;sicurezza;screensaver;
 StartupNotify=false

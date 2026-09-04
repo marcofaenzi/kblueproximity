@@ -1,0 +1,11 @@
+kblueproximity usr/share/kblueproximity/
+proximity.py usr/share/kblueproximity/
+kblueproximity_base.svg usr/share/kblueproximity/
+kblueproximity_attention.svg usr/share/kblueproximity/
+kblueproximity_error.svg usr/share/kblueproximity/
+kblueproximity_nocon.svg usr/share/kblueproximity/
+kblueproximity_pause.svg usr/share/kblueproximity/
+addons/kblueproximity usr/bin/
+addons/kblueproximity.desktop usr/share/applications/
+addons/it.faenzi.kblueproximity.metainfo.xml usr/share/metainfo/
+addons/kblueproximity.xpm usr/share/pixmaps/

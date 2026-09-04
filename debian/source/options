@@ -1,0 +1,3 @@
+extend-diff-ignore = "(^|/)__pycache__/"
+extend-diff-ignore = "\.pyc$"
+extend-diff-ignore = "\.mo$"

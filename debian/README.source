@@ -1,0 +1,27 @@
+This package uses source format 3.0 (quilt). The orig tarball must not
+contain the debian/ directory.
+
+Install the build dependencies:
+
+  sudo apt install build-essential debhelper dh-python gettext python3 lintian
+
+From a git checkout of the matching upstream version:
+
+  rm -rf /tmp/kblueproximity-orig
+  mkdir -p /tmp/kblueproximity-orig
+  git archive --format=tar --prefix=kblueproximity-2.2.3/ HEAD \
+    | tar -x -C /tmp/kblueproximity-orig
+  rm -rf /tmp/kblueproximity-orig/kblueproximity-2.2.3/debian
+  tar -C /tmp/kblueproximity-orig --owner=root --group=root --sort=name \
+    -czf ../kblueproximity_2.2.3.orig.tar.gz kblueproximity-2.2.3
+
+Then build with:
+
+  dpkg-buildpackage -us -uc -S
+  dpkg-buildpackage -us -uc -b
+  lintian -I ../kblueproximity_2.2.3-1.dsc ../kblueproximity_2.2.3-1_all.deb
+
+uscan (debian/watch) expects an upstream GitHub tag such as v2.2.3.
+
+After the ITP bug is filed, add "(Closes: #nnnnnn)" to debian/changelog
+and change the distribution from UNRELEASED to unstable.

@@ -1,0 +1,3 @@
+Tests: metadata
+Depends: appstream, desktop-file-utils
+Restrictions: superficial

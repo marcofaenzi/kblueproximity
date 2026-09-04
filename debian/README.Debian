@@ -1,0 +1,11 @@
+KBlueProximity
+--------------
+
+Configuration is stored in ~/.kblueproximity/ as ConfigObj files.
+
+On first run, existing settings from the legacy BlueProximity directory
+~/.blueproximity/ are copied if present.
+
+Pair a Bluetooth device with BlueZ first, then set its MAC address in
+Preferences. Default lock/unlock commands use loginctl; Plasma can also
+use the freedesktop ScreenSaver interface via qdbus6.
